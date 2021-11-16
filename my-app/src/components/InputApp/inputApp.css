@@ -1,0 +1,63 @@
+/* pure css */
+.content--main--posts {
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  text-align: left;
+}
+.content--main--posts--tittle {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.content--main--posts--add {
+  display: flex;
+  width: 100%;
+  justify-content: start;
+}
+.content--main--posts--input {
+  width: 80%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+  padding: 0 20px;
+}
+
+.content--main--posts--btn {
+  border: none;
+  margin-left: 20px;
+  width: 150px;
+  height: 40px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+  background-color: #262626;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.content--main--posts--btn:hover {
+  transition: all 0.2s ease-out;
+  text-shadow: 0px 0px 10px #fff;
+}
+
+.content--main--posts--old {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+}
+
+.content--main--posts--old--item {
+  width: 100%;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.content--main--posts--old--item .content--main--user--avatar {
+  width: 70px;
+  height: 70px;
+}

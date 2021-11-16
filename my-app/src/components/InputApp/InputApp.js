@@ -2,7 +2,7 @@ const InputApp = () => {
   return (
     <div className="content--main--posts">
       <div className="content--main--posts--tittle">My Posts</div>
-      <div className="content--main--posts--add">
+      <form className="content--main--posts--add">
         <input
           className="content--main--posts--input"
           placeholder="your news..."
@@ -11,7 +11,7 @@ const InputApp = () => {
         <button className="content--main--posts--btn" type="submit">
           Send
         </button>
-      </div>
+      </form>
       <div className="content--main--posts--old">
         <div className="content--main--posts--old--item">
           <img

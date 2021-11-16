@@ -1,3 +1,6 @@
-@import url("../../css/content.css");
 @import url("../../css/global.css");
-@import url("../../css/header.css");
+
+@import url("../Aside/aside.css");
+@import url("../Header/header.css");
+@import url("../InputApp/inputApp.css");
+@import url("../MainContent/mainContant.css");

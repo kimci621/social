@@ -1,0 +1,60 @@
+/* pure css */
+.content--aside {
+  background-color: #262626;
+  border-radius: 5px;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 20px;
+  color: #fff;
+  margin-right: 20px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.content--aside--friends-item img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+.content--aside--nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  text-align: left;
+  margin-bottom: 100px;
+}
+
+.content--aside--friends-tittle {
+  font-size: 24px;
+}
+.content--aside--friends-allItem {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.content--aside--friends-item {
+  margin: 0 auto;
+  text-align: center;
+  cursor: pointer;
+}
+.content--aside--friends-item:hover {
+  transition: all 0.2s ease-out;
+  text-shadow: 0px 0px 10px #fff;
+}
+
+.content--nav--item {
+  cursor: pointer;
+}
+
+.content--nav--item:hover {
+  transition: all .3s ease;
+  text-shadow: 0px 0px 10px #fff;
+  text-decoration: underline;
+}
+
+.content--nav--item:last-child {
+  margin-top: 30px;
+}

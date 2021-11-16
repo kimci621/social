@@ -1,9 +1,9 @@
 const Header = () => {
   return (
     <header className="header">
-      <div className="header--logo">
+      <a href="https://google.com" className="header--logo">
         <img src="./wars.svg" alt="wars" />
-      </div>
+      </a>
       <button type="submit" className="header--leave-btn">
         leave
       </button>
