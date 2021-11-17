@@ -1,0 +1,36 @@
+.wrapperWindow {
+  padding: 100px 50px;
+  width: 100%;
+}
+.window {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px 50px 10px 10px;
+}
+.dialogInfoWindow {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-right: 50px;
+}
+
+.userAvatarWindow {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.userNameWindow {
+  margin-top: 10px;
+  font-size: 22px;
+}
+
+.dialogWindow {
+  padding: 20px;
+  border: 1px solid #26262685;
+  box-shadow: 2px 2px 2px 2px #2626264d;
+  border-radius: 10px;
+  width: 350px;
+  min-width: 200px;
+  height: auto;
+}

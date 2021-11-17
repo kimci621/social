@@ -4,6 +4,8 @@
   justify-content: flex-start;
   flex-direction: column;
   text-align: left;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .content--main--posts--tittle {
   font-size: 24px;
