@@ -3,6 +3,7 @@
   background-color: #262626;
   border-radius: 5px;
   min-width: 250px;
+  max-width: 251px;
   display: flex;
   flex-direction: column;
   padding: 15px 20px;
@@ -12,8 +13,8 @@
 }
 
 .content--aside--friends-item img {
-  width: 42px;
-  height: 42px;
+  width: 35px;
+  height: 32px;
   border-radius: 50%;
 }
 
@@ -25,34 +26,40 @@
   font-weight: 500;
   text-align: left;
   margin-bottom: 100px;
+  color: #fff;
 }
-
 .content--aside--friends-tittle {
   font-size: 24px;
 }
 .content--aside--friends-allItem {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
   margin-top: 20px;
 }
 .content--aside--friends-item {
-  margin: 0 auto;
+  margin: 15px 10px;
   text-align: center;
   cursor: pointer;
+  width: 40px;
+  height: 40px;
+  font-size: 12px;
 }
 .content--aside--friends-item:hover {
   transition: all 0.2s ease-out;
   text-shadow: 0px 0px 10px #fff;
 }
 
-.content--nav--item {
+.content--nav--item a{
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 .content--nav--item:hover {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   text-shadow: 0px 0px 10px #fff;
-  text-decoration: underline;
 }
 
 .content--nav--item:last-child {

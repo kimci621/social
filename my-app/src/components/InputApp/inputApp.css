@@ -1,7 +1,7 @@
 /* pure css */
 .content--main--posts {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   flex-direction: column;
   text-align: left;
 }
@@ -14,7 +14,7 @@
 .content--main--posts--add {
   display: flex;
   width: 100%;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .content--main--posts--input {
   width: 80%;
@@ -47,17 +47,51 @@
   margin-top: 30px;
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   flex-direction: column;
 }
 
-.content--main--posts--old--item {
-  width: 100%;
-  display: flex;
-  margin-bottom: 20px;
+.old-post {
+  width: 75%;
 }
 
-.content--main--posts--old--item .content--main--user--avatar {
+.content--main--posts--old--item {
+  transition: all 0.3s ease-in;
+  width: 90%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  padding-right: 30px;
+}
+
+.content--main--posts--old--item img {
   width: 70px;
   height: 70px;
+  margin-right: 20px;
+}
+
+.heart {
+  transition: all .3s ease;
+  fill: #262626;
+  position: relative;
+  top: 40px;
+  left: 10px;
+  width: 50px;
+  cursor: pointer;
+}
+
+.heart.active {
+  fill: rgb(255, 98, 70);
+}
+
+.heart:hover {
+  fill: rgb(255, 98, 70);
+}
+.likes{
+  position: relative;
+}
+.count{
+  position: absolute;
+  top: 40px;
+  left: 35px;
 }

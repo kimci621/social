@@ -1,0 +1,23 @@
+.dialogWrapper{
+  display: flex;
+  justify-content: flex-start;
+  background-color: lightgrey;
+}
+
+.module{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.title{
+  font-size: 32px;
+}
+
+/* .names{
+border-right: 1px solid #262626;
+}
+
+.messages{
+
+} */

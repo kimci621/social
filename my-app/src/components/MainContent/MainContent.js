@@ -1,8 +1,13 @@
-import InputApp from '../InputApp/InputApp'
+import InputApp from "../InputApp/InputApp";
+import { Link } from "react-router-dom";
 
 const MainContent = () => {
   return (
     <div className="content--main">
+      <nav>
+        <Link to="profile"></Link>
+      </nav>
+
       <img
         className="content--main--img"
         src="https://w.wallhaven.cc/full/3z/wallhaven-3z9vpd.jpg"
@@ -25,10 +30,9 @@ const MainContent = () => {
           </div>
         </div>
       </div>
-      <InputApp/>
+      <InputApp />
     </div>
   );
 };
-
 
 export default MainContent;

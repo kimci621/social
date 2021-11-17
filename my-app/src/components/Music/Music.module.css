@@ -1,0 +1,9 @@
+.wrapper{
+  display: flex;
+  justify-content: flex-start;
+  background-color: lightgrey;
+}
+
+.title{
+  font-size: 32px;
+}

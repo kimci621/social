@@ -7,7 +7,7 @@
 
 .content--main--user {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   text-align-last: left;
   margin-bottom: 20px;
   font-weight: 500;
