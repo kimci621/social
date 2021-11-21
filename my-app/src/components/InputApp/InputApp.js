@@ -1,4 +1,10 @@
-const Post = ({ avatarSrc, input, count=0 }) => {
+let myPosts = [{
+  postText: "lorem ipsum dolor sor dolor sit amet consectetur!",
+  avatar: "https://preview.redd.it/z394307odi741.png?width=960&crop=smart&auto=webp&s=cf3cf47ed51432893f33227fb3865fee75d4b721",
+  likesCount: 1
+}]
+
+const Post = ({ avatarSrc, input, count }) => {
   return (
     <div className="content--main--posts--old--item">
       <img src={avatarSrc} alt="user-img"></img>
@@ -43,9 +49,9 @@ const InputApp = () => {
       </form>
       <div className="content--main--posts--old">
         <Post
-          avatarSrc="https://preview.redd.it/z394307odi741.png?width=960&crop=smart&auto=webp&s=cf3cf47ed51432893f33227fb3865fee75d4b721"
-          input="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Accusantium, expedita eius laborum obcaecati quidem vero?"
+          avatarSrc={myPosts[0].avatar}
+          input={myPosts[0].postText}
+          count={myPosts[0].likesCount}
         />
       </div>
     </div>

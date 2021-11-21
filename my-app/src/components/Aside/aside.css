@@ -13,9 +13,10 @@
 }
 
 .content--aside--friends-item img {
-  width: 35px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
+  margin: 0 auto;
 }
 
 .content--aside--nav {
@@ -45,6 +46,7 @@
   width: 40px;
   height: 40px;
   font-size: 12px;
+  text-decoration: none;
 }
 .content--aside--friends-item:hover {
   transition: all 0.2s ease-out;
@@ -64,4 +66,8 @@
 
 .content--nav--item:last-child {
   margin-top: 30px;
+}
+
+.friends-name{
+  color: #fff;
 }

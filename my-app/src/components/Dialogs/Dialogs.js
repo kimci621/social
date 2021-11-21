@@ -2,6 +2,24 @@ import styles from "./Dialogs.module.css";
 import stylesW from "./DialogWindow.module.css";
 import { Link, NavLink } from "react-router-dom";
 
+let messages = [
+  {
+    name: "Andrew",
+    avatar:
+      "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+  },
+  {
+    name: "John",
+    avatar:
+      "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+  },
+  {
+    name: "Mcley",
+    avatar:
+      "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+  },
+];
+
 const AddUser = ({ name, avatar }) => {
   return (
     <li>
@@ -12,6 +30,10 @@ const AddUser = ({ name, avatar }) => {
     </li>
   );
 };
+
+let messagesJSX = messages.map((m) => {
+  return <AddUser name={m.name} avatar={m.avatar} />;
+});
 
 const AddDialog = ({ name, avatar, message, empty = "false" }) => {
   switch (empty) {
@@ -41,20 +63,7 @@ const Dialogs = (props) => {
     <div className={styles.wrapper}>
       <div className={styles.UserListWrapper}>
         <h2 className={styles.title}>Dialogs:</h2>
-        <ul className={styles.userList}>
-          <AddUser
-            name="Andrew"
-            avatar="https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg"
-          />
-          <AddUser
-            name="Andrew"
-            avatar="https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg"
-          />
-          <AddUser
-            name="Andrew"
-            avatar="https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg"
-          />
-        </ul>
+        <ul className={styles.userList}>{messagesJSX}</ul>
         {/* for rout */}
         <nav>
           <Link to="messages"></Link>
