@@ -1,4 +1,4 @@
-//deps
+//libs
 import { Fragment } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //Components

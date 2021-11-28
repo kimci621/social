@@ -1,12 +1,12 @@
-//render
-import state from "./state";
-import { listener } from "./state";
-//Deps
+//libs
 import React from "react";
 import ReactDOM from "react-dom";
 //Apps
 import App from "./components/App/App";
-import { addPost } from "./state";
+// import { addPost } from "./state";
+// import state from "./state";
+// import { observer } from "./state";
+import store from "./state";
 //css
 import "./index.css";
 
@@ -21,7 +21,7 @@ let reactDomRender = (state) => {
         friendsData={state.asideComponent.friendsData}
         dialogData={state.dialogComponent.dialogData}
         messagesData={state.dialogComponent.messagesData}
-        addPost={addPost}
+        addPost={store.addPost.bind(store)}
         onPostChange={state.addpostComponent}
         dialogsComponent={state.dialogComponent}
       />
@@ -29,7 +29,7 @@ let reactDomRender = (state) => {
     document.getElementById("root")
   );
 };
-
-reactDomRender(state);
-//rerender on change
-listener(reactDomRender);
+//first render
+reactDomRender(store.getState());
+//rerender on change (function in state = reactDomRender)
+store.observer(reactDomRender);
