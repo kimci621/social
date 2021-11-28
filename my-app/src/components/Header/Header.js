@@ -8,9 +8,9 @@ const Header = () => {
         <Link to="autorisation"></Link>
       </nav>
       <header className="header">
-        <a href="https://google.com" className="header--logo">
+        <NavLink to="/" className="header--logo">
           <img src="./wars.svg" alt="wars" />
-        </a>
+        </NavLink>
         <NavLink to="/autorisation" className="header--leave-btn">
           leave
         </NavLink>

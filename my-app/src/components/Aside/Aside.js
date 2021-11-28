@@ -1,7 +1,7 @@
 import FriendsAside from "./FriendsAside/FriendsAside";
 import { NavLink } from "react-router-dom";
 
-const Aside = () => {
+const Aside = (props) => {
   return (
     <div className="content--aside">
       <ul className="content--aside--nav">
@@ -22,7 +22,7 @@ const Aside = () => {
         </li>
       </ul>
 
-      <FriendsAside />
+      <FriendsAside friendsData={props.friendsData}/>
     </div>
   );
 };

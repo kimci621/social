@@ -1,64 +1,37 @@
-import styles from "./Dialogs.module.css";
-import stylesW from "./DialogWindow.module.css";
-import { Link, NavLink } from "react-router-dom";
-
-let messages = [
-  {
-    name: "Andrew",
-    avatar:
-      "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-  },
-  {
-    name: "John",
-    avatar:
-      "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-  },
-  {
-    name: "Mcley",
-    avatar:
-      "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-  },
-];
-
-const AddUser = ({ name, avatar }) => {
-  return (
-    <li>
-      <NavLink to={name} className={styles.user}>
-        <img className={styles.userAvatar} src={avatar} alt="avatar" />
-        <div className={styles.userName}>{name}</div>
-      </NavLink>
-    </li>
-  );
-};
-
-let messagesJSX = messages.map((m) => {
-  return <AddUser name={m.name} avatar={m.avatar} />;
-});
-
-const AddDialog = ({ name, avatar, message, empty = "false" }) => {
-  switch (empty) {
-    case "false":
-      return (
-        <div className={stylesW.window}>
-          <div className={stylesW.dialogInfoWindow}>
-            <img
-              className={stylesW.userAvatarWindow}
-              src={avatar}
-              alt="avatar"
-            />
-            <div className={stylesW.userNameWindow}>{name}</div>
-          </div>
-          <div className={stylesW.dialogWindow}>{message}</div>
-        </div>
-      );
-    case "true":
-      return <h1>no dialog...</h1>;
-    default:
-      return;
-  }
-};
+import styles from "./css/Dialogs.module.css";
+import stylesW from "./css/DialogWindow.module.css";
+import { Link } from "react-router-dom";
+import DialogInput from "./DialogInput";
+import { AddDialog } from "./AddElems";
+import { AddUser } from "./AddElems";
+import { AddMyDialog } from "./DialogInput";
 
 const Dialogs = (props) => {
+  let dialogsJSX = props.dialogData.map((d) => {
+    return (
+      <AddDialog
+        name={d.name}
+        avatar={d.avatar}
+        message={d.message}
+        empty={d.empty}
+      />
+    );
+  });
+
+  let messagesJSX = props.messagesData.map((m) => {
+    return <AddUser name={m.name} avatar={m.avatar} />;
+  });
+
+  let MyMesagesJSX = props.dialogsComponent.myMesages.map((item) => {
+    return (
+      <AddMyDialog
+        name={item.name}
+        avatar={item.avatar}
+        message={item.message}
+      />
+    );
+  });
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.UserListWrapper}>
@@ -71,12 +44,9 @@ const Dialogs = (props) => {
         {/* out */}
       </div>
       <div className={stylesW.wrapperWindow}>
-        <AddDialog
-          name="Andrew"
-          avatar="https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg"
-          message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium accusantium ad nostrum ratione!Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium accusantium ad nostrum ratione!"
-          empty="false"
-        />
+        {MyMesagesJSX}
+        {dialogsJSX}
+        <DialogInput dialogsComponent={props.dialogsComponent} />
       </div>
     </div>
   );
