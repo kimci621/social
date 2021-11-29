@@ -1,6 +1,6 @@
 import styles from "./css/Dialogs.module.css";
 import stylesW from "./css/DialogWindow.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 const AddUser = ({ name, avatar }) => {
   return (
     <li>
@@ -12,7 +12,7 @@ const AddUser = ({ name, avatar }) => {
   );
 };
 
-const AddDialog = ({ name, avatar, message, empty = false }) => {
+const AddDialog = ({ name, avatar, message, empty = false, link }) => {
   switch (empty) {
     case false:
       return (
@@ -26,6 +26,9 @@ const AddDialog = ({ name, avatar, message, empty = false }) => {
             <div className={stylesW.userNameWindow}>{name}</div>
           </div>
           <div className={stylesW.dialogWindow}>{message}</div>
+          <nav>
+            <Link to={"/messages/" + link}></Link>
+          </nav>
         </div>
       );
     case true:

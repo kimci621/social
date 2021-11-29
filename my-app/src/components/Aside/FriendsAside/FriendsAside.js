@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 
-const AddFriend = ({ avatarSrc, name }) => {
+const AddFriend = ({ avatar, name }) => {
   return (
     <NavLink to={name} className="content--aside--friends-item">
-      <img src={avatarSrc} alt="friend img"></img>
+      <img src={avatar} alt="friend img"></img>
       <div className="friends-name">{name}</div>
     </NavLink>
   );
@@ -11,7 +11,7 @@ const AddFriend = ({ avatarSrc, name }) => {
 
 const FriendsAside = (props) => {
   let allFriendsJSX = props.friendsData.map((f) => {
-    return <AddFriend avatarSrc={f.avatarSrc} name={f.name} />;
+    return <AddFriend avatar={f.avatar} name={f.name} />;
   });
 
   return (

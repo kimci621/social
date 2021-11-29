@@ -37,10 +37,11 @@ function App(props) {
                 }
               ></Route>
               <Route
-                path="messages"
+                path="/messages"
                 element={
                   <Dialogs
                     state={props.state}
+                    dispatch={props.dispatch}
                     dialogData={props.state.dialogComponent.dialogData}
                     messagesData={props.state.dialogComponent.messagesData}
                     myProfile={props.state.profileComponent.myProfile}

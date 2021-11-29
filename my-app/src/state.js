@@ -1,3 +1,8 @@
+//reducers ./reducers:
+import profileReducer from "./reducers/profileReducer";
+//actions:
+//profileReducer action : "ADD-POST"
+
 let store = {
   _state: {
     profileComponent: {
@@ -9,6 +14,7 @@ let store = {
         city: "Voronezh",
         about: "Some awesome dev! ^_^",
       },
+      // !!! refactor
       myProfileLogic: ({ avatar, name, bDay, city, about }) => {
         return (
           <div className="content--main--user">
@@ -45,6 +51,7 @@ let store = {
       ],
       profileBG: {
         src: "https://www.techrepublic.com/a/hub/i/r/2021/02/05/2c503225-0fb7-447f-8f34-facda0dc4472/resize/770x/c92a9410c170ba0c2f77ba3fb097a7a8/smash-3.jpg",
+        // !!! refactor
         jsx: () => {
           return (
             <img
@@ -57,26 +64,10 @@ let store = {
       },
     },
     dialogComponent: {
-      dialogData: [
-        {
-          name: "Andrew",
-          avatar:
-            "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-          message: "Importand mesage!",
-          empty: false,
-        },
-      ],
-
-      messagesData: [
-        {
-          name: "Andrew",
-          avatar:
-            "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        },
-      ],
-      myMesages: [],
+      dialogData: [],
+      // !!! refactor
       sendMesage: (message) => {
-        store.getState().dialogComponent.myMesages.push({
+        store.getState().dialogComponent.dialogData.push({
           name: store.getState().profileComponent.myProfile.name,
           avatar: store.getState().profileComponent.myProfile.avatar,
           message: message,
@@ -87,22 +78,23 @@ let store = {
     asideComponent: {
       friendsData: [
         {
-          avatarSrc:
+          avatar:
             "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
           name: "Andrew",
         },
         {
-          avatarSrc:
+          avatar:
             "https://cdn.dribbble.com/users/588874/screenshots/2289762/media/dec5e3b1de8bc1017e1234c8df25f3b5.png?compress=1&resize=800x600",
           name: "Caesar",
         },
         {
-          avatarSrc:
+          avatar:
             "https://www.freepnglogos.com/uploads/darth-vader-png/vector-profile-darth-vader-frames-illustrations-32.png",
           name: "Collman",
         },
       ],
     },
+    // !!! refactor
     onTypeText: {
       text: "",
       logic: (input) => {
@@ -110,6 +102,7 @@ let store = {
         store._rerender(store.getState());
       },
     },
+    // !!! refactor
     onTypeTextDialogs: {
       text: "",
       logic: (input) => {
@@ -122,32 +115,17 @@ let store = {
   _rerender() {
     alert(alert("no subscribers!"));
   },
-  //rerender method binding with dom render
-  observer(subscriber) {
-    this._rerender = subscriber;
+  //rerender method, make domRender as subscriber of _rerender
+  subscriber(observer) {
+    this._rerender = observer;
   },
   //state getter
   getState() {
     return this._state;
   },
-  //all methods in dispatch
+  //all methods in dispatch as reducers
   dispatch(action) {
-    switch (action.type) {
-      case "addPost":
-        this._state.profileComponent.myPosts.push({
-          id: this._state.profileComponent.myPosts.length + 1,
-          postText: this._state.onTypeText.text,
-          avatar: this._state.profileComponent.myProfile.avatar,
-          likesCount: 0,
-        });
-        this._rerender(this._state); //warning!
-        break;
-      case "test":
-        alert("test");
-        break;
-      default:
-        return;
-    }
+    profileReducer(store.getState(), action);
   },
 };
 

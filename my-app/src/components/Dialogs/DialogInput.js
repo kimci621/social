@@ -16,13 +16,16 @@ const DialogInput = (props) => {
   const ref = useRef(null);
   const sendMesage = (e) => {
     e.preventDefault();
-    props.dialogsComponent.sendMesage(ref.current.value);
-    ref.current.value = "";
+    if (props.state.onTypeTextDialogs.text) {
+      props.dialogsComponent.sendMesage(ref.current.value);
+      props.state.onTypeTextDialogs.text = "";
+    } else {
+      alert("type the message!");
+    }
   };
 
   let onTypeText = () => {
     props.state.onTypeTextDialogs.logic(ref.current.value);
-    console.log(props.state.onTypeTextDialogs);
   };
 
   return (

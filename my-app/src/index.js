@@ -10,10 +10,7 @@ import "./index.css";
 let reactDomRender = (state) => {
   ReactDOM.render(
     <React.StrictMode>
-      <App
-        state={state}
-        dispatch={store.dispatch.bind(store)}
-      />
+      <App state={state} dispatch={store.dispatch.bind(store)} />
     </React.StrictMode>,
     document.getElementById("root")
   );
@@ -21,4 +18,4 @@ let reactDomRender = (state) => {
 //first render
 reactDomRender(store.getState());
 //rerender on change (function in state = reactDomRender)
-store.observer(reactDomRender);
+store.subscriber(reactDomRender);

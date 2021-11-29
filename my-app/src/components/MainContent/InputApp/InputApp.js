@@ -34,13 +34,14 @@ const InputApp = (props) => {
     );
   });
   let ref = useRef();
+  let addPostActionType = { type: "ADD-POST" };
   //Add new post on submit
   let addNewPost = (e) => {
     e.preventDefault();
     let text = ref.current.value;
 
     if (text) {
-      props.dispatch({ type: "addPost" });
+      props.dispatch(addPostActionType);
       props.onTypeText.logic("");
     } else {
       alert("Nothing to post!");
