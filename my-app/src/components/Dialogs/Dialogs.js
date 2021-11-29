@@ -46,7 +46,7 @@ const Dialogs = (props) => {
       <div className={stylesW.wrapperWindow}>
         {MyMesagesJSX}
         {dialogsJSX}
-        <DialogInput dialogsComponent={props.dialogsComponent} />
+        <DialogInput dialogsComponent={props.dialogsComponent} state={props.state}/>
       </div>
     </div>
   );

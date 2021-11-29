@@ -33,25 +33,23 @@ const InputApp = (props) => {
       />
     );
   });
+  let ref = useRef();
   //Add new post on submit
   let addNewPost = (e) => {
     e.preventDefault();
     let text = ref.current.value;
-    let addpost = props.addPost;
 
     if (text) {
-      addpost(text);
-      props.onPostChange.logic("");
+      props.dispatch({ type: "addPost" });
+      props.onTypeText.logic("");
     } else {
       alert("Nothing to post!");
     }
   };
-  //
-  let ref = useRef();
   let changeState = () => {
-    props.onPostChange.logic(ref.current.value);
+    props.onTypeText.logic(ref.current.value);
+    console.log(props);
   };
-
   return (
     <div className="content--main--posts">
       <div className="content--main--posts--tittle">My Posts</div>
@@ -61,7 +59,7 @@ const InputApp = (props) => {
           className="content--main--posts--input"
           placeholder="your news..."
           type="text"
-          value={props.onPostChange.text}
+          value={props.onTypeText.text}
           onChange={changeState}
         ></input>
         <button

@@ -14,10 +14,15 @@ const AddMyDialog = ({ name, avatar, message }) => {
 };
 const DialogInput = (props) => {
   const ref = useRef(null);
-  const showInput = (e) => {
+  const sendMesage = (e) => {
     e.preventDefault();
     props.dialogsComponent.sendMesage(ref.current.value);
     ref.current.value = "";
+  };
+
+  let onTypeText = () => {
+    props.state.onTypeTextDialogs.logic(ref.current.value);
+    console.log(props.state.onTypeTextDialogs);
   };
 
   return (
@@ -27,8 +32,10 @@ const DialogInput = (props) => {
         className={styles.input}
         type="text"
         ref={ref}
+        value={props.state.onTypeTextDialogs.text}
+        onChange={onTypeText}
       />
-      <button className={styles.btn} type="submit" onClick={showInput}>
+      <button className={styles.btn} type="submit" onClick={sendMesage}>
         send
       </button>
     </form>

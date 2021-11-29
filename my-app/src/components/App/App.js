@@ -13,7 +13,6 @@ import Autorisation from "../Autorisation/Autorisation";
 //css
 import "./App.css";
 import "../../css/my-fonts.css";
-
 function App(props) {
   return (
     <BrowserRouter>
@@ -21,19 +20,19 @@ function App(props) {
         <Header />
         <div className="container">
           <div className="content">
-            <Aside friendsData={props.friendsData} />
+            <Aside friendsData={props.state.asideComponent.friendsData} />
             <Routes>
               <Route path="/" element={<News />}></Route>
               <Route
                 path="profile"
                 element={
                   <MainContent
-                    addPost={props.addPost}
-                    myPosts={props.myPosts}
-                    myProfileLogic={props.myProfileLogic}
-                    profileBG={props.profileBG}
-                    myProfile={props.myProfile}
-                    onPostChange={props.onPostChange}
+                    dispatch={props.dispatch}
+                    myPosts={props.state.profileComponent.myPosts}
+                    myProfileLogic={props.state.profileComponent.myProfileLogic}
+                    profileBG={props.state.profileComponent.profileBG}
+                    myProfile={props.state.profileComponent.myProfile}
+                    onTypeText={props.state.onTypeText}
                   />
                 }
               ></Route>
@@ -41,10 +40,11 @@ function App(props) {
                 path="messages"
                 element={
                   <Dialogs
-                    dialogData={props.dialogData}
-                    messagesData={props.messagesData}
-                    myProfile={props.myProfile}
-                    dialogsComponent={props.dialogsComponent}
+                    state={props.state}
+                    dialogData={props.state.dialogComponent.dialogData}
+                    messagesData={props.state.dialogComponent.messagesData}
+                    myProfile={props.state.profileComponent.myProfile}
+                    dialogsComponent={props.state.dialogComponent}
                   />
                 }
               ></Route>
@@ -59,5 +59,4 @@ function App(props) {
     </BrowserRouter>
   );
 }
-
 export default App;

@@ -44,12 +44,12 @@ let store = {
         },
       ],
       profileBG: {
-        src: "https://w.wallhaven.cc/full/3z/wallhaven-3z9vpd.jpg",
+        src: "https://www.techrepublic.com/a/hub/i/r/2021/02/05/2c503225-0fb7-447f-8f34-facda0dc4472/resize/770x/c92a9410c170ba0c2f77ba3fb097a7a8/smash-3.jpg",
         jsx: () => {
           return (
             <img
               className="content--main--img"
-              src={store.getState().profileComponent.profileBG.src}
+              src={store._state.profileComponent.profileBG.src}
               alt="react-img"
             ></img>
           );
@@ -59,10 +59,10 @@ let store = {
     dialogComponent: {
       dialogData: [
         {
-          name: "test",
+          name: "Andrew",
           avatar:
             "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-          message: "testetsettse",
+          message: "Importand mesage!",
           empty: false,
         },
       ],
@@ -70,31 +70,6 @@ let store = {
       messagesData: [
         {
           name: "Andrew",
-          avatar:
-            "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        },
-        {
-          name: "John",
-          avatar:
-            "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        },
-        {
-          name: "Mcley",
-          avatar:
-            "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        },
-        {
-          name: "Andrew",
-          avatar:
-            "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        },
-        {
-          name: "John",
-          avatar:
-            "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        },
-        {
-          name: "Mcley",
           avatar:
             "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
         },
@@ -128,34 +103,51 @@ let store = {
         },
       ],
     },
-    addpostComponent: {
+    onTypeText: {
       text: "",
       logic: (input) => {
-        let state = store.getState();
-        state.addpostComponent.text = input;
-        store._rerender(state);
+        store.getState().onTypeText.text = input;
+        store._rerender(store.getState());
+      },
+    },
+    onTypeTextDialogs: {
+      text: "",
+      logic: (input) => {
+        store.getState().onTypeTextDialogs.text = input;
+        store._rerender(store.getState());
       },
     },
   },
+  //rerender method
   _rerender() {
     alert(alert("no subscribers!"));
   },
-  addPost(text) {
-    const newPost = {
-      id: this._state.profileComponent.myPosts.length + 1,
-      postText: text,
-      avatar: this._state.profileComponent.myProfile.avatar,
-      likesCount: 0,
-    };
-
-    this._state.profileComponent.myPosts.push(newPost);
-    this._rerender(this._state); //warning!
-  },
+  //rerender method binding with dom render
   observer(subscriber) {
     this._rerender = subscriber;
   },
+  //state getter
   getState() {
     return this._state;
+  },
+  //all methods in dispatch
+  dispatch(action) {
+    switch (action.type) {
+      case "addPost":
+        this._state.profileComponent.myPosts.push({
+          id: this._state.profileComponent.myPosts.length + 1,
+          postText: this._state.onTypeText.text,
+          avatar: this._state.profileComponent.myProfile.avatar,
+          likesCount: 0,
+        });
+        this._rerender(this._state); //warning!
+        break;
+      case "test":
+        alert("test");
+        break;
+      default:
+        return;
+    }
   },
 };
 

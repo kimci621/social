@@ -7,7 +7,6 @@ const MainContent = (props) => {
   const ProfileeInfo = props.myProfileLogic;
   const ProfileBgApp = props.profileBG.jsx;
 
-
   return (
     <div className="content--main">
       <nav>
@@ -23,8 +22,8 @@ const MainContent = (props) => {
       />
       <InputApp
         myPosts={props.myPosts}
-        addPost={props.addPost}
-        onPostChange={props.onPostChange}
+        dispatch={props.dispatch}
+        onTypeText={props.onTypeText}
       />
     </div>
   );
