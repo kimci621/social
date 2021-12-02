@@ -1,5 +1,7 @@
 //reducers ./reducers:
 import profileReducer from "./reducers/profileReducer";
+import sendMesageReducer from "./reducers/sendMesageReducer";
+import inputToStateReducer from "./reducers/inputToStateReducer";
 //actions:
 //profileReducer action : "ADD-POST"
 
@@ -14,7 +16,6 @@ let store = {
         city: "Voronezh",
         about: "Some awesome dev! ^_^",
       },
-      // !!! refactor
       myProfileLogic: ({ avatar, name, bDay, city, about }) => {
         return (
           <div className="content--main--user">
@@ -51,7 +52,6 @@ let store = {
       ],
       profileBG: {
         src: "https://www.techrepublic.com/a/hub/i/r/2021/02/05/2c503225-0fb7-447f-8f34-facda0dc4472/resize/770x/c92a9410c170ba0c2f77ba3fb097a7a8/smash-3.jpg",
-        // !!! refactor
         jsx: () => {
           return (
             <img
@@ -65,15 +65,6 @@ let store = {
     },
     dialogComponent: {
       dialogData: [],
-      // !!! refactor
-      sendMesage: (message) => {
-        store.getState().dialogComponent.dialogData.push({
-          name: store.getState().profileComponent.myProfile.name,
-          avatar: store.getState().profileComponent.myProfile.avatar,
-          message: message,
-        });
-        store._rerender(store.getState());
-      },
     },
     asideComponent: {
       friendsData: [
@@ -94,21 +85,11 @@ let store = {
         },
       ],
     },
-    // !!! refactor
     onTypeText: {
       text: "",
-      logic: (input) => {
-        store.getState().onTypeText.text = input;
-        store._rerender(store.getState());
-      },
     },
-    // !!! refactor
     onTypeTextDialogs: {
       text: "",
-      logic: (input) => {
-        store.getState().onTypeTextDialogs.text = input;
-        store._rerender(store.getState());
-      },
     },
   },
   //rerender method
@@ -126,6 +107,12 @@ let store = {
   //all methods in dispatch as reducers
   dispatch(action) {
     profileReducer(store.getState(), action);
+    sendMesageReducer(store.getState(), action);
+    inputToStateReducer(store.getState(), action);
+    //rerender on action
+    if (action) {
+      store._rerender(store.getState());
+    }
   },
 };
 

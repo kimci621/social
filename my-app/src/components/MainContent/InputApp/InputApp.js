@@ -42,14 +42,16 @@ const InputApp = (props) => {
 
     if (text) {
       props.dispatch(addPostActionType);
-      props.onTypeText.logic("");
+      props.onTypeText.text = "";
     } else {
       alert("Nothing to post!");
     }
   };
   let changeState = () => {
-    props.onTypeText.logic(ref.current.value);
-    console.log(props);
+    props.dispatch({
+      type: "INPUT-TO-STATE-ADDPOST",
+      input: ref.current.value,
+    });
   };
   return (
     <div className="content--main--posts">

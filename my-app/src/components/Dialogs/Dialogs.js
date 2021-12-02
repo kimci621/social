@@ -47,10 +47,7 @@ const Dialogs = (props) => {
       {/* dialog window */}
       <div className={stylesW.wrapperWindow}>
         {dialogsJSX}
-        <DialogInput
-          dialogsComponent={props.dialogsComponent}
-          state={props.state}
-        />
+        <DialogInput state={props.state} dispatch={props.dispatch} />
       </div>
       {/* dialog window  */}
     </div>

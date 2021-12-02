@@ -12,12 +12,15 @@ const AddMyDialog = ({ name, avatar, message }) => {
     </div>
   );
 };
+
+// inputToStateReducer({type: "INPUT-TO-STATE"})
 const DialogInput = (props) => {
   const ref = useRef(null);
+
   const sendMesage = (e) => {
     e.preventDefault();
     if (props.state.onTypeTextDialogs.text) {
-      props.dialogsComponent.sendMesage(ref.current.value);
+      props.dispatch({ type: "SEND-MESSAGE" });
       props.state.onTypeTextDialogs.text = "";
     } else {
       alert("type the message!");
@@ -25,7 +28,7 @@ const DialogInput = (props) => {
   };
 
   let onTypeText = () => {
-    props.state.onTypeTextDialogs.logic(ref.current.value);
+    props.dispatch({ type: "INPUT-TO-STATE", input: ref.current.value });
   };
 
   return (
