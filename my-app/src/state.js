@@ -16,30 +16,8 @@ let store = {
         city: "Voronezh",
         about: "Some awesome dev! ^_^",
       },
-      myProfileLogic: ({ avatar, name, bDay, city, about }) => {
-        return (
-          <div className="content--main--user">
-            <img
-              className="content--main--user--avatar"
-              src={avatar}
-              alt="user-img"
-            ></img>
-            <div className="content--main--user--info">
-              <div className="content--main--user--info--name">
-                Name: {name}
-              </div>
-              <div className="content--main--user--info--about">
-                Date of Birth: {bDay}
-              </div>
-              <div className="content--main--user--info--about">
-                City: {city}
-              </div>
-              <div className="content--main--user--info--about">
-                About: <p>{about}</p>
-              </div>
-            </div>
-          </div>
-        );
+      profileBG: {
+        src: "https://www.techrepublic.com/a/hub/i/r/2021/02/05/2c503225-0fb7-447f-8f34-facda0dc4472/resize/770x/c92a9410c170ba0c2f77ba3fb097a7a8/smash-3.jpg",
       },
       myPosts: [
         {
@@ -50,18 +28,6 @@ let store = {
           likesCount: 0,
         },
       ],
-      profileBG: {
-        src: "https://www.techrepublic.com/a/hub/i/r/2021/02/05/2c503225-0fb7-447f-8f34-facda0dc4472/resize/770x/c92a9410c170ba0c2f77ba3fb097a7a8/smash-3.jpg",
-        jsx: () => {
-          return (
-            <img
-              className="content--main--img"
-              src={store._state.profileComponent.profileBG.src}
-              alt="react-img"
-            ></img>
-          );
-        },
-      },
     },
     dialogComponent: {
       dialogData: [],

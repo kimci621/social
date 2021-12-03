@@ -29,12 +29,9 @@ function App(props) {
                   <MainContent
                     dispatch={props.dispatch}
                     myPosts={props.state.profileComponent.myPosts}
-                    myProfileLogic={props.state.profileComponent.myProfileLogic}
                     profileBG={props.state.profileComponent.profileBG}
                     myProfile={props.state.profileComponent.myProfile}
-                    // del
                     onTypeText={props.state.onTypeText}
-                    // del
                   />
                 }
               ></Route>
