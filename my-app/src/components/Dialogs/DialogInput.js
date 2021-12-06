@@ -12,8 +12,6 @@ const AddMyDialog = ({ name, avatar, message }) => {
     </div>
   );
 };
-
-// inputToStateReducer({type: "INPUT-TO-STATE"})
 const DialogInput = (props) => {
   const ref = useRef(null);
 

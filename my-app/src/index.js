@@ -18,4 +18,6 @@ let reactDomRender = (state) => {
 //first render
 reactDomRender(store.getState());
 //rerender on change (function in state = reactDomRender)
-store.subscriber(reactDomRender);
+store.subscribe(() => {
+  reactDomRender(store.getState());
+});
