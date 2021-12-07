@@ -29,65 +29,6 @@ let allData = {
           "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
         message: "Milord!",
       },
-      {
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },
-      {
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },
-      {
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },
-      {
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },{
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },{
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },{
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },{
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },{
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },{
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },{
-        name: "Andrew",
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-        message: "Milord!",
-      },
     ],
   },
   asideComponent: {
@@ -136,11 +77,14 @@ const reducers = (state = allData, action) => {
       newState.textFromState = action.input;
       return newState;
     case "SEND-MESSAGE":
-      // let newMessage = {
-      //   name: state.profileComponent.myProfile.name,
-      //   avatar: state.profileComponent.myProfile.avatar,
-      //   message: state.onTypeTextDialogs.text,
-      // };;
+      let newMessage = {
+        name: state.profileComponent.myProfile.name,
+        avatar: state.profileComponent.myProfile.avatar,
+        message: state.textFromStateDialogs,
+      };
+      newState.dialogComponent.dialogData = state.dialogComponent.dialogData;
+      newState.dialogComponent.dialogData.push(newMessage);
+      newState.textFromStateDialogs = "";
       return newState;
     case "SHOW-STATE":
       console.log(state);
