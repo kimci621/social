@@ -1,4 +1,4 @@
-import Dialogs from "./Dialogs";
+import MainContent from "./MainContent";
 import { connect } from "react-redux";
 
 const addPostType = () => {

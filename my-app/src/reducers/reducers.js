@@ -9,7 +9,7 @@ let allData = {
       about: "Some awesome dev! ^_^",
     },
     profileBG: {
-      src: "https://www.techrepublic.com/a/hub/i/r/2021/02/05/2c503225-0fb7-447f-8f34-facda0dc4472/resize/770x/c92a9410c170ba0c2f77ba3fb097a7a8/smash-3.jpg",
+      src: "https://storge.pic2.me/c/1360x800/419/591c0be7f306b.jpg",
     },
     myPosts: [
       {
@@ -24,6 +24,65 @@ let allData = {
   dialogComponent: {
     dialogData: [
       {
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },
+      {
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },
+      {
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },
+      {
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },
+      {
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },{
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },{
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },{
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },{
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },{
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },{
+        name: "Andrew",
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+        message: "Milord!",
+      },{
         name: "Andrew",
         avatar:
           "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
@@ -50,40 +109,42 @@ let allData = {
       },
     ],
   },
-  onTypeText: {
-    text: "",
-  },
-  onTypeTextDialogs: {
-    text: "",
-  },
+  textFromState: "",
+  textFromStateDialogs: "",
 };
 
-
 const reducers = (state = allData, action) => {
+  let newState = { ...state };
   switch (action.type) {
     case "INPUT-TO-STATE":
-      return { ...state, onTypeTextDialogs: { text: action.input } };
+      newState.textFromStateDialogs = { ...state.textFromStateDialogs };
+      newState.textFromStateDialogs = action.input;
+      return newState;
     case "ADD-POST":
-      return {
-        ...state,
-        state: state.profileComponent.myPosts.push({
-          id: state.profileComponent.myPosts.length + 1,
-          postText: state.onTypeText.text,
-          avatar: state.profileComponent.myProfile.avatar,
-          likesCount: 0,
-        }),
+      let newPost = {
+        id: state.profileComponent.myPosts.length + 1,
+        postText: state.textFromState,
+        avatar: state.profileComponent.myProfile.avatar,
+        likesCount: 0,
       };
+      newState.profileComponent.myPosts = state.profileComponent.myPosts;
+      newState.profileComponent.myPosts.push(newPost);
+      newState.textFromState = "";
+      return newState;
     case "INPUT-TO-STATE-ADDPOST":
-      return { ...state, onTypeText: { text: action.input } };
+      newState.textFromState = { ...state.textFromState };
+      newState.textFromState = action.input;
+      return newState;
     case "SEND-MESSAGE":
-      return {
-        ...state,
-        state: state.dialogComponent.dialogData.push({
-          name: state.profileComponent.myProfile.name,
-          avatar: state.profileComponent.myProfile.avatar,
-          message: state.onTypeTextDialogs.text,
-        }),
-      };
+      // let newMessage = {
+      //   name: state.profileComponent.myProfile.name,
+      //   avatar: state.profileComponent.myProfile.avatar,
+      //   message: state.onTypeTextDialogs.text,
+      // };;
+      return newState;
+    case "SHOW-STATE":
+      console.log(state);
+      return { ...state };
     default:
       return { ...state };
   }

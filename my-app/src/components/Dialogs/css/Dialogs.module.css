@@ -5,8 +5,8 @@
   width: 100%;
   border-radius: 5px;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
-  max-height: auto;
   overflow: auto;
+  max-height: 600px;
 }
 
 .title {

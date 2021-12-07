@@ -1,14 +1,17 @@
 .wrapperWindow {
-  padding: 30px 20px;
-  width: 80%;
+  padding: 0px;
+  width: 100%;
   overflow: auto;
   position: relative;
+  max-height: 565px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #2626263b;
 }
 .window {
   display: flex;
   justify-content: flex-start;
   padding: 10px 20px 10px 10px;
-  overflow: auto;
 }
 .dialogInfoWindow {
   display: flex;
@@ -38,4 +41,10 @@
   height: 50px;
   max-height: 80px;
   overflow: auto;
+}
+
+.wrapperDuo{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

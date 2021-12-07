@@ -1,10 +1,8 @@
 import styles from "./css/Dialogs.module.css";
 import stylesW from "./css/DialogWindow.module.css";
 import { Link } from "react-router-dom";
-import DialogInput from "./DialogInput";
-import { AddDialog } from "./AddElems";
-import { AddUser } from "./AddElems";
-import { AddMyDialog } from "./DialogInput";
+import { AddUser, AddDialog } from "./AddElems";
+import { AddMyDialog, DialogInput } from "./DialogInput";
 
 const Dialogs = (props) => {
   let name = props.state.profileComponent.myProfile.name;
@@ -45,8 +43,10 @@ const Dialogs = (props) => {
         {/* out */}
       </div>
       {/* dialog window */}
-      <div className={stylesW.wrapperWindow}>
-        {dialogsJSX}
+      <div className={stylesW.wrapperDuo}>
+        <div className={stylesW.wrapperWindow}>
+          <div>{dialogsJSX}</div>
+        </div>
         <DialogInput state={props.state} dispatch={props.dispatch} />
       </div>
       {/* dialog window  */}

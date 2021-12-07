@@ -17,9 +17,9 @@ const DialogInput = (props) => {
 
   const sendMesage = (e) => {
     e.preventDefault();
-    if (props.state.onTypeTextDialogs.text) {
+    if (props.state.textFromStateDialogs) {
       props.dispatch({ type: "SEND-MESSAGE" });
-      props.state.onTypeTextDialogs.text = "";
+      props.state.textFromStateDialogs = "";
     } else {
       alert("type the message!");
     }
@@ -28,15 +28,15 @@ const DialogInput = (props) => {
   let onTypeText = () => {
     props.dispatch({ type: "INPUT-TO-STATE", input: ref.current.value });
   };
-
   return (
     <form className={styles.wrapper}>
       <input
+        autoFocus={true}
         placeholder="me: "
         className={styles.input}
         type="text"
         ref={ref}
-        value={props.state.onTypeTextDialogs.text}
+        value={props.state.textFromStateDialogs}
         onChange={onTypeText}
       />
       <button className={styles.btn} type="submit" onClick={sendMesage}>
@@ -46,5 +46,4 @@ const DialogInput = (props) => {
   );
 };
 
-export { AddMyDialog };
-export default DialogInput;
+export { AddMyDialog, DialogInput };

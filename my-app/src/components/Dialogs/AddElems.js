@@ -38,5 +38,4 @@ const AddDialog = ({ name, avatar, message, empty = false, link }) => {
   }
 };
 
-export { AddUser };
-export { AddDialog };
+export { AddDialog, AddUser };
