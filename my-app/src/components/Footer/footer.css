@@ -1,7 +1,6 @@
 /* pure css */
 footer {
   display: flex;
-  margin: 50px 50px 0 50px;
   padding: 20px 50px;
   justify-content: space-between;
   border-top-left-radius: 5px;
@@ -11,6 +10,7 @@ footer {
   color: #fff;
   font-family: "Oswald", sans-serif;
   position: static;
+  margin: auto 50px 1px;
   bottom: 0;
   height: 50px;
 }

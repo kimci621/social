@@ -11,10 +11,11 @@ import Music from "../Music/Music";
 import Settings from "../Settings/Settings";
 import Autorisation from "../Autorisation/Autorisation";
 import Footer from "../Footer/Footer";
+import FindUsersContainer from "../FindUsers/FindUsersContainer";
 //css
 import "./App.css";
 import "../../css/my-fonts.css";
-function App(props) {
+function App() {
   return (
     <BrowserRouter>
       <Fragment>
@@ -25,11 +26,12 @@ function App(props) {
             <Routes>
               <Route path="/" element={<News />}></Route>
               <Route path="profile" element={<MainContentContainer />}></Route>
-              <Route path="/messages" element={<DialogsContainer />}></Route>
+              <Route path="messages" element={<DialogsContainer />}></Route>
               <Route path="news" element={<News />}></Route>
               <Route path="music" element={<Music />}></Route>
               <Route path="settings" element={<Settings />}></Route>
               <Route path="autorisation" element={<Autorisation />}></Route>
+              <Route path="users" element={<FindUsersContainer />}></Route>
             </Routes>
           </div>
         </div>

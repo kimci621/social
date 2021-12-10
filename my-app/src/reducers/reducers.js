@@ -34,22 +34,59 @@ let allData = {
   asideComponent: {
     friendsData: [
       {
+        id: 1,
         avatar:
           "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
         name: "Andrew",
-      },
-      {
-        avatar:
-          "https://cdn.dribbble.com/users/588874/screenshots/2289762/media/dec5e3b1de8bc1017e1234c8df25f3b5.png?compress=1&resize=800x600",
-        name: "Caesar",
-      },
-      {
-        avatar:
-          "https://www.freepnglogos.com/uploads/darth-vader-png/vector-profile-darth-vader-frames-illustrations-32.png",
-        name: "Collman",
+        old: 21,
+        city: "Moscow",
+        status: ":D",
+        folowed: true,
       },
     ],
   },
+  newFriends: [
+    {
+      id: 1,
+      avatar:
+        "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+      name: "JoJo",
+      old: 22,
+      city: "Tokyo",
+      status: "Urauraura!",
+      folowed: false,
+    },
+    {
+      id: 2,
+      avatar:
+        "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+      name: "Holyday",
+      old: 29,
+      city: "Chicago",
+      status: "Take your time=]",
+      folowed: false,
+    },
+    {
+      id: 3,
+      avatar:
+        "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+      name: "BO$$",
+      old: 14,
+      city: "Berlin",
+      status: "HI!11!",
+      folowed: false,
+    },
+    {
+      id: 4,
+      avatar:
+        "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+      name: "Andrew",
+      old: 21,
+      city: "Moscow",
+      status: ":D",
+      folowed: true,
+    },
+  ],
   textFromState: "",
   textFromStateDialogs: "",
 };
@@ -86,9 +123,32 @@ const reducers = (state = allData, action) => {
       newState.dialogComponent.dialogData.push(newMessage);
       newState.textFromStateDialogs = "";
       return newState;
-    case "SHOW-STATE":
-      console.log(state);
-      return { ...state };
+    case "FOLLOW":
+      newState.newFriends = [...state.newFriends].map((user) => {
+        if (user.id === action.id) {
+          return { ...user, folowed: !user.folowed };
+        }
+        return user;
+      });
+      newState.asideComponent.friendsData = [
+        ...state.asideComponent.friendsData,
+      ];
+      return newState;
+    case "UNFOLLOW":
+      console.log("UNFOLLOW");
+      return newState;
+    case "SHOWMORE":
+      console.log("SHOWMORE");
+      return newState;
+    case "SET-USERS":
+      newState.newFriends = [...state.newFriends].map((user) => {
+        return user;
+      });
+      newState.asideComponent.friendsData = [
+        ...state.asideComponent.friendsData,
+      ];
+      return newState;
+    //нужно чтобы он подтягивал с сервера и фильтрофал их в state.newFriends
     default:
       return { ...state };
   }

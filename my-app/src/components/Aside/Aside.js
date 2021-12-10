@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-const Aside = ({ friendsData }) => {
+const Aside = ({ friendsData, newFriendUpdate }) => {
   //jsx for "friend" in aside bar
   const AddFriend = ({ avatar, name }) => {
     return (
@@ -38,6 +38,16 @@ const Aside = ({ friendsData }) => {
         </li>
         <li className="content--nav--item">
           <NavLink to="/music">Music</NavLink>
+        </li>
+        <li className="content--nav--item">
+          <NavLink
+            to="/users"
+            onClick={() => {
+              newFriendUpdate();
+            }}
+          >
+            Users
+          </NavLink>
         </li>
         <li className="content--nav--item">
           <NavLink to="/settings">Settings</NavLink>
