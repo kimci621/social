@@ -1,13 +1,6 @@
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
-
-const addMessageToState = () => {
-  return { type: "SEND-MESSAGE" };
-};
-
-const toStateThisInput = (input) => {
-  return { type: "INPUT-TO-STATE", input: input };
-};
+import { addMessageToState, toStateThisInput } from "../../reducers/reducers";
 
 const mapStateToProps = (state) => {
   return {
@@ -18,18 +11,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addMessageToState: () => {
-      dispatch(addMessageToState());
-    },
-    toStateThisInput: (input) => {
-      dispatch(toStateThisInput(input));
-    },
-    showState: () => {
-      dispatch({ type: "SHOW-STATE" });
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+export default connect(mapStateToProps, {
+  //mapDispatchToProps
+  addMessageToState,
+  toStateThisInput,
+})(Dialogs);

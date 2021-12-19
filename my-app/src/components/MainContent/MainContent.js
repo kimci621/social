@@ -8,7 +8,6 @@ const MainContent = ({
   backgroundImage,
   addPost,
   postTyping,
-  showState,
 }) => {
   //inputApp start
   const Post = ({ avatarSrc, input, count }) => {

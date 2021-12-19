@@ -1,13 +1,6 @@
 import MainContent from "./MainContent";
 import { connect } from "react-redux";
-
-const addPostType = () => {
-  return { type: "ADD-POST" };
-};
-
-const PostType = (input) => {
-  return { type: "INPUT-TO-STATE-ADDPOST", input: input };
-};
+import { addPostType, PostType } from "../../reducers/reducers";
 
 const mapStateToProps = (state) => {
   return {
@@ -18,18 +11,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addPost: () => {
-      dispatch(addPostType());
-    },
-    postTyping: (input) => {
-      dispatch(PostType(input));
-    },
-    showState: () => {
-      dispatch({ type: "SHOW-STATE" });
-    },
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainContent);
+export default connect(mapStateToProps, { 
+  //mapDispatchToProps
+  addPostType, PostType 
+})(MainContent);

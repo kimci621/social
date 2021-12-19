@@ -1,40 +1,23 @@
 import FindUsers from "./FindUsers";
 import { connect } from "react-redux";
-
-const followType = (id) => {
-  return { type: "FOLLOW", id: id};
-};
-const unFollowType = () => {
-  return { type: "UNFOLLOW" };
-};
-const showMoreType = () => {
-  return { type: "SHOWMORE" };
-};
-const setUsersType = () => {
-  return { type: "SET-USERS" };
-};
+import {follow,unFollow,setUsers,editTotalPages,changeActivePage,isFetching} from "../../reducers/reducers";
 
 const mapStateToProps = (state) => {
   return {
     users: state.newFriends,
+    activePage: state.pagination.activePage,
+    allPages: state.pagination.allPages,
+    isFetchingState: state.isFetching,
+    usersPerPage: state.pagination.usersPerPage,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    follow: (id) => {
-      dispatch(followType(id));
-    },
-    unFollow: () => {
-      dispatch(unFollowType());
-    },
-    showMore: () => {
-      dispatch(showMoreType());
-    },
-    setUsers: () => {
-      dispatch(setUsersType());
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FindUsers);
+export default connect(mapStateToProps, {
+  //mapDispatchToProps
+  follow,
+  unFollow,
+  setUsers,
+  editTotalPages,
+  changeActivePage,
+  isFetching
+})(FindUsers);

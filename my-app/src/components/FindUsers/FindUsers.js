@@ -1,63 +1,72 @@
+import { React, Component } from "react";
+import FindUsersJsx from "./FindUsersFunc";
+import axios from "axios";
+import loader from "../../assets/loader.svg";
 import styles from "./FindUsers.module.css";
-import { React } from "react";
-const FindUsers = ({ users, follow, unFollow, showMore }) => {
-  let UserWrapper = ({ avatar, name, status, city, key, id, btnStatus }) => {
-    return (
-      <div className={styles.userWrapper} key={key}>
-        <div className={styles.leftUser}>
-          <img className={styles.userAvatar} src={avatar} alt="userImage"></img>
-          <button
-            className={styles.followTrigger}
-            type="button"
-            onClick={() => {
-              follow(id);
-            }}
-          >
-            {btnStatus}
-          </button>
-        </div>
-        <div className={styles.rightUser}>
-          <div className={styles.mainInfo}>
-            <h3 className={styles.name}>{name}</h3>
-            <h4 className={styles.status}>{status}</h4>
-          </div>
-          <div className={styles.city}>{city}</div>
-        </div>
-      </div>
-    );
-  };
-  let AddNewUsersToPage = () => {
-    return users.map((user) => {
-      return (
-        <UserWrapper
-          avatar={user.avatar}
-          name={user.name}
-          status={user.status}
-          city={user.city}
-          key={user.id}
-          btnStatus={user.folowed ? "unfollow" : "follow"}
-          id={user.id}
-        />
-      );
-    });
-  };
-  return (
-    <div className={styles.wrapper}>
-      <h2>New Users</h2>
-      <AddNewUsersToPage />
-      <button
-        className={styles.moreBtn}
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          showMore();
-        }}
-      >
-        more users
-      </button>
-      <h2>End</h2>
-    </div>
-  );
-};
 
-export default FindUsers;
+export default class FindUser extends Component {
+  componentDidMount() {
+    this.props.isFetching(true);
+    axios
+      .get(
+        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.activePage}&count=5`
+      )
+      .then((res) => {
+        this.props.isFetching(false);
+        this.props.editTotalPages(res.data.totalCount);
+        this.props.setUsers(res.data.items);
+      });
+  }
+
+  onPageChange = (currentPage) => {
+    this.props.isFetching(true);
+    this.props.changeActivePage(currentPage);
+    axios
+      .get(
+        `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=5`
+      )
+      .then((res) => {
+        this.props.isFetching(false);
+        this.props.setUsers(res.data.items);
+      });
+  };
+
+  moreUsers = (currentPage, count) => {
+    this.props.isFetching(true);
+    this.props.changeActivePage(currentPage);
+    axios
+      .get(
+        `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${count}`
+      )
+      .then((res) => {
+        this.props.isFetching(false);
+        this.props.setUsers(res.data.items);
+      });
+  };
+
+  render() {
+    let li = [];
+    for (let i = 1; i <= this.props.allPages / 1000; i++) {
+      li.push(i);
+    }
+
+    return (
+      <>
+        {this.props.isFetchingState ? (
+          <img src={loader} alt="spinner" className={styles.loader}></img>
+        ) : null}
+        <FindUsersJsx
+          isFetchingState={this.props.isFetchingState}
+          loader={loader}
+          follow={this.props.follow}
+          users={this.props.users}
+          moreUsers={this.moreUsers}
+          li={li}
+          onPageChange={this.onPageChange}
+          activePage={this.props.activePage}
+          usersPerPage={this.props.usersPerPage}
+        />
+      </>
+    );
+  }
+}

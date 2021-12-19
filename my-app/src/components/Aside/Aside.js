@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-const Aside = ({ friendsData, newFriendUpdate }) => {
+const Aside = ({ friendsData, setUsers, currentPage }) => {
   //jsx for "friend" in aside bar
   const AddFriend = ({ avatar, name }) => {
     return (
@@ -43,7 +43,7 @@ const Aside = ({ friendsData, newFriendUpdate }) => {
           <NavLink
             to="/users"
             onClick={() => {
-              newFriendUpdate();
+              setUsers();
             }}
           >
             Users
