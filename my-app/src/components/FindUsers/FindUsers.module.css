@@ -164,13 +164,3 @@ h2 {
 .activePage {
   box-shadow: 5px -5px 2px 2px rgba(0, 0, 0, 0.6) !important;
 }
-.loader {
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  top: 0;
-  left: 0;
-  position: absolute;
-  z-index: 99999;
-  background-color: transparent;
-}

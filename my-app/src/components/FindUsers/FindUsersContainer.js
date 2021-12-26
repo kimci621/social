@@ -1,23 +1,25 @@
 import FindUsers from "./FindUsers";
 import { connect } from "react-redux";
-import {follow,unFollow,setUsers,editTotalPages,changeActivePage,isFetching} from "../../reducers/reducers";
+import { setUsers, follow, updateUsers } from "../../reducers/users";
+import { editTotalPages, changeActivePage } from "../../reducers/pagination";
+import { isFetching } from "../../reducers/isFetching";
 
 const mapStateToProps = (state) => {
   return {
-    users: state.newFriends,
-    activePage: state.pagination.activePage,
-    allPages: state.pagination.allPages,
-    isFetchingState: state.isFetching,
-    usersPerPage: state.pagination.usersPerPage,
+    users: state.usersReducer.newFriends,
+    activePage: state.paginationReducer.activePage,
+    allPages: state.paginationReducer.allPages,
+    isFetchingState: state.isFetchingReducer.isFetching,
+    usersPerPage: state.usersReducer.usersPerPage,
   };
 };
 
 export default connect(mapStateToProps, {
   //mapDispatchToProps
   follow,
-  unFollow,
   setUsers,
   editTotalPages,
   changeActivePage,
-  isFetching
+  isFetching,
+  updateUsers
 })(FindUsers);

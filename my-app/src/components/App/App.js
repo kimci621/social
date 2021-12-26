@@ -2,9 +2,9 @@
 import { Fragment } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //Components
-import Header from "../Header/Header";
+import HeaderContainer from "../Header/HeaderContainer";
 import AsideContainer from "../Aside/AsideContainer";
-import MainContentContainer from "../MainContent/MainContentContainer";
+import ProfileContainer from "../Profile/ProfileContainer";
 import DialogsContainer from "../Dialogs/DialogsContainer";
 import News from "../News/News";
 import Music from "../Music/Music";
@@ -19,19 +19,19 @@ function App() {
   return (
     <BrowserRouter>
       <Fragment>
-        <Header />
         <div className="container">
+          <HeaderContainer />
           <div className="content">
             <AsideContainer />
             <Routes>
-              <Route path="/" element={<News />}></Route>
-              <Route path="profile" element={<MainContentContainer />}></Route>
-              <Route path="messages" element={<DialogsContainer />}></Route>
-              <Route path="news" element={<News />}></Route>
-              <Route path="music" element={<Music />}></Route>
-              <Route path="settings" element={<Settings />}></Route>
-              <Route path="autorisation" element={<Autorisation />}></Route>
-              <Route path="users" element={<FindUsersContainer />}></Route>
+              <Route path="/" element={<News />} />
+              <Route path="/profile/*" element={<ProfileContainer />} />
+              <Route path="/messages/*" element={<DialogsContainer />} />
+              <Route path="/news/*" element={<News />} />
+              <Route path="/music/*" element={<Music />} />
+              <Route path="/settings/*" element={<Settings />} />
+              <Route path="/login/*" element={<Autorisation />} />
+              <Route path="/users/*" element={<FindUsersContainer />} />
             </Routes>
           </div>
         </div>

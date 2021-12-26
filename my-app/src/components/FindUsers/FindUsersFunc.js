@@ -1,17 +1,29 @@
 import { React } from "react";
 import styles from "./FindUsers.module.css";
+import { NavLink } from "react-router-dom";
+import usersApi from "../../api/api";
 
 const FindUserJsx = (props) => {
   const UserWrapper = ({ avatar, name, status, city, key, id, btnStatus }) => {
     return (
       <div className={styles.userWrapper} key={key}>
         <div className={styles.leftUser}>
-          <img className={styles.userAvatar} src={avatar} alt="userImage"></img>
+          <NavLink to={"/profile/" + id}>
+            <img
+              className={styles.userAvatar}
+              src={avatar}
+              alt="userImage"
+            ></img>
+          </NavLink>
           <button
             className={styles.followTrigger}
             type="button"
             onClick={() => {
+              usersApi.followUser(id);
               props.follow(id);
+              usersApi.getUsers().then((res) => {
+                props.updateUsers(res.items);
+              });
             }}
           >
             {btnStatus}
@@ -41,7 +53,7 @@ const FindUserJsx = (props) => {
           status={user.status ? user.status : "no status..."}
           city={user.city ? user.city : "unknow city..."}
           key={user.id}
-          btnStatus={user.folowed ? "unfollow" : "follow"}
+          btnStatus={user.followed ? "unfollow" : "follow"}
           id={user.id}
         />
       );
@@ -55,8 +67,11 @@ const FindUserJsx = (props) => {
       <button
         className={styles.moreBtn}
         type="button"
-        onClick={() => {props.moreUsers(props.activePage, props.usersPerPage);}}>
-          more users
+        onClick={() => {
+          props.moreUsers(props.activePage, props.usersPerPage);
+        }}
+      >
+        more users
       </button>
       <ul className={styles.allPages}>
         {props.li.map((li) => {
@@ -64,16 +79,32 @@ const FindUserJsx = (props) => {
             return (
               <li
                 className={styles.activePage}
-                onClick={() => {props.onPageChange(li);}}>{li}</li>);
+                onClick={() => {
+                  props.onPageChange(li);
+                }}
+              >
+                {li}
+              </li>
+            );
           } else {
             return (
-              <li onClick={() => {props.onPageChange(li);}}>{li}</li>);}})}
+              <li
+                onClick={() => {
+                  props.onPageChange(li);
+                }}
+              >
+                {li}
+              </li>
+            );
+          }
+        })}
       </ul>
       <div
         className={styles.refreshBtn}
         onClick={() => {
           props.onPageChange(1);
-        }}>
+        }}
+      >
         <img src="./refresh-button.png" alt="refresh-button" />
       </div>
       <h2>End</h2>

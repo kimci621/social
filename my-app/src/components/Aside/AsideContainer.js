@@ -1,15 +1,12 @@
 import Aside from "./Aside";
 import { connect } from "react-redux";
-import { setUsers } from "../../reducers/reducers";
+import { setUsers, updateUsers } from "../../reducers/users";
 
 const mapStateToProps = (state) => {
   return {
-    friendsData: state.asideComponent.friendsData,
-    currentPage: state.pagination.activePage,
+    state: state,
+    friendsData: state.usersReducer.friendsData,
   };
 };
 
-export default connect(mapStateToProps, {
-  //mapDispatchToProps
-  setUsers,
-})(Aside);
+export default connect(mapStateToProps, { setUsers, updateUsers })(Aside);

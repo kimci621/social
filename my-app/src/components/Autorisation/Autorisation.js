@@ -5,10 +5,10 @@ const Autorisation = (props) => {
   return (
     <div className={styles.wrapper}>
       <nav>
-        <Link to="autorisation"></Link>
+        <Link to="/login/*"></Link>
       </nav>
 
-      <h2 className={styles.title}>Autorisation:</h2>
+      <h2 className={styles.title}>login:</h2>
     </div>
   );
 };

@@ -1,14 +1,7 @@
 import { Link } from "react-router-dom";
-import { React, useRef } from "react";
+import React from "react";
 
-const MainContent = ({
-  myPosts,
-  textFromState,
-  myProfile,
-  backgroundImage,
-  addPost,
-  postTyping,
-}) => {
+const ProfileFunc = (props) => {
   //inputApp start
   const Post = ({ avatarSrc, input, count }) => {
     //refactor !!
@@ -35,32 +28,36 @@ const MainContent = ({
   };
 
   const InputApp = () => {
-    //All posts from state for export to MainContent
-    let posts = myPosts.map((post) => {
-      return (
-        <Post
-          avatarSrc={post.avatar}
-          input={post.postText}
-          count={post.likesCount}
-        />
-      );
-    });
+    //All posts from state for export to Profile
+    let posts;
+    if (!props.myPosts) {
+      return null;
+    } else {
+      posts = props.myPosts.map((post) => {
+        return (
+          <Post
+            avatarSrc={post.avatar}
+            input={post.postText}
+            count={post.likesCount}
+          />
+        );
+      });
+    }
     //input value of posts
-    let ref = useRef();
+    let ref = React.createRef(null);
     //Add new post on submit button press
     let addNewPost = (e) => {
       e.preventDefault();
       if (ref.current.value) {
         //dispatch
-        addPost();
-        textFromState = "";
+        props.addPostType(props.avatar);
       } else {
         alert("Nothing to post!");
       }
     };
     //dispatch
     let changeState = () => {
-      postTyping(ref.current.value);
+      props.PostType(ref.current.value);
     };
     return (
       <div className="content--main--posts">
@@ -74,7 +71,7 @@ const MainContent = ({
             className="content--main--posts--input"
             placeholder="your news..."
             type="text"
-            value={textFromState}
+            value={props.textFromState}
             onChange={changeState}
           ></input>
           <button
@@ -85,13 +82,12 @@ const MainContent = ({
             Send
           </button>
         </form>
-        <div className="content--main--posts--old">{posts}</div>
+        <div className="content--main--posts--old">{posts ? posts : null}</div>
       </div>
     );
   };
   //inputApp end
 
-  const bDay = `${myProfile.bDay.day} ${myProfile.bDay.month} ${myProfile.bDay.year}`;
   //background-image
   const ProfileBgApp = ({ imgSrc }) => {
     return (
@@ -99,7 +95,7 @@ const MainContent = ({
     );
   };
   //profile info-s
-  const ProfileeInfo = ({ avatar, name, bDay, city, about }) => {
+  const ProfileeInfo = ({ avatar, name, github, about, job }) => {
     return (
       <div className="content--main--user">
         <img
@@ -110,33 +106,35 @@ const MainContent = ({
         <div className="content--main--user--info">
           <div className="content--main--user--info--name">Name: {name}</div>
           <div className="content--main--user--info--about">
-            Date of Birth: {bDay}
+            Looking for a Job: {job ? "yes" : "no"}
           </div>
-          <div className="content--main--user--info--about">City: {city}</div>
           <div className="content--main--user--info--about">
-            About: <p>{about}</p>
+            github: {github ? github : "no link :c"}
+          </div>
+          <div className="content--main--user--info--about">
+            About: <p>{about ? about : "no status"}</p>
           </div>
         </div>
       </div>
     );
   };
-
   return (
     <div className="content--main">
       <nav>
         <Link to="profile"></Link>
       </nav>
-      <ProfileBgApp imgSrc={backgroundImage} />
+      <ProfileBgApp imgSrc={props.backgroundImage} />
+
       <ProfileeInfo
-        avatar={myProfile.avatar}
-        name={myProfile.name}
-        bDay={bDay}
-        city={myProfile.city}
-        about={myProfile.about}
+        name={props.myProfile.fullName}
+        job={props.myProfile.lookingForAJob}
+        about={props.myProfile.aboutMe}
+        avatar={props.avatar}
+        github={props.github}
       />
       <InputApp />
     </div>
   );
 };
 
-export default MainContent;
+export default ProfileFunc;
