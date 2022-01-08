@@ -12,7 +12,7 @@ const AsideFunc = (props) => {
   };
   //AddFriend jsx for every "friend" from state
   const FriendsAside = () => {
-    let allFriendsJSX = props.friendsData.map((f) => {
+    let allFriendsJSX = props.friendsData.map((f) => { // eslint-disable-line
       if (f) {
         return <AddFriend avatar={f.photo} name={f.name} id={f.id} />;
       }
@@ -42,12 +42,7 @@ const AsideFunc = (props) => {
           <NavLink to="/music">Music</NavLink>
         </li>
         <li className="content--nav--item">
-          <NavLink
-            to="/users"
-            onClick={() => {
-              props.setUsers();
-            }}
-          >
+          <NavLink to="/users">
             Users
           </NavLink>
         </li>
@@ -55,7 +50,6 @@ const AsideFunc = (props) => {
           <NavLink to="/settings">Settings</NavLink>
         </li>
       </ul>
-
       <FriendsAside />
     </div>
   );

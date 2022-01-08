@@ -1,6 +1,11 @@
 import FindUsers from "./FindUsers";
 import { connect } from "react-redux";
-import { setUsers, follow, updateUsers } from "../../reducers/users";
+import {
+  setUsers,
+  follow,
+  thunkUsersUpdate,
+  moreUsers,
+} from "../../reducers/users";
 import { editTotalPages, changeActivePage } from "../../reducers/pagination";
 import { isFetching } from "../../reducers/isFetching";
 
@@ -11,6 +16,7 @@ const mapStateToProps = (state) => {
     allPages: state.paginationReducer.allPages,
     isFetchingState: state.isFetchingReducer.isFetching,
     usersPerPage: state.usersReducer.usersPerPage,
+    isDisabled: state.usersReducer.isDisabled,
   };
 };
 
@@ -21,5 +27,6 @@ export default connect(mapStateToProps, {
   editTotalPages,
   changeActivePage,
   isFetching,
-  updateUsers
+  moreUsers,
+  thunkUsersUpdate,
 })(FindUsers);

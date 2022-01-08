@@ -1,3 +1,4 @@
+import usersApi from "../api/api";
 let initialState = {
   myProfile: {},
   avatar: null,
@@ -50,4 +51,13 @@ export const updateGithub = (payload) => {
   return { type: "UPDATE-GITHUB", payload: payload };
 };
 
+export const thunkProfile = () => {
+  return (dispatch) => {
+    usersApi.getSelfAccount().then((res) => {
+      dispatch(updateProfile(res));
+      dispatch(updateAvatar(res.photos.large));
+      dispatch(updateGithub(res.contacts.github));
+    });
+  };
+};
 export default profileUpdateReducer;

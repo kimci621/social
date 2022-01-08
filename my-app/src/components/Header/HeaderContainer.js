@@ -1,14 +1,11 @@
 import React from "react";
 import Header from "./Header";
 import { connect } from "react-redux";
-import { setUserLoginData } from "../../reducers/login";
-import usersApi from "../../api/api";
+import {  thunkLogin } from "../../reducers/login";
 
 class HeaderContainer extends React.Component {
   componentDidMount() {
-    usersApi.getAuthStatus().then((res) => {
-      this.props.setUserLoginData(res.login);
-    });
+    this.props.thunkLogin();
   }
 
   render() {
@@ -21,4 +18,6 @@ const mapStateToProps = (state) => ({
   state: state,
 });
 
-export default connect(mapStateToProps, { setUserLoginData })(HeaderContainer);
+export default connect(mapStateToProps, {  thunkLogin })(
+  HeaderContainer
+);

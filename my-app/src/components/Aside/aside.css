@@ -40,6 +40,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 20px;
+  max-height: 240px;
+  overflow: hidden;
 }
 .content--aside--friends-item {
   margin: 10px 1px;

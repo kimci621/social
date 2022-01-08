@@ -1,3 +1,4 @@
+import usersApi from "../api/api";
 let initialState = {
   login: null,
 };
@@ -16,6 +17,14 @@ const loginReducer = (state = initialState, action) => {
 
 export const setUserLoginData = (payload) => {
   return { type: "SET-USER-LOGINDATA", payload: payload };
+};
+
+export const thunkLogin = () => {
+  return (dispatch) => {
+    usersApi.getAuthStatus().then((res) => {
+      dispatch(setUserLoginData(res.login));
+    });
+  };
 };
 
 export default loginReducer;

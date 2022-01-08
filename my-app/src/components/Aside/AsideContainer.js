@@ -1,7 +1,6 @@
 import Aside from "./Aside";
 import { connect } from "react-redux";
-import { setUsers, updateUsers } from "../../reducers/users";
-
+import { setUsers, thunkUsersUpdate } from "../../reducers/users";
 const mapStateToProps = (state) => {
   return {
     state: state,
@@ -9,4 +8,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setUsers, updateUsers })(Aside);
+export default connect(mapStateToProps, {
+  setUsers,
+  thunkUsersUpdate,
+})(Aside);

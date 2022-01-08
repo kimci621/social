@@ -8,16 +8,13 @@ import store from "./state";
 //css
 import "./index.css";
 
-
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App
-        state={store.getState()}
-        store={store}
-        dispatch={store.dispatch.bind(store)}
-      />
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <App
+      state={store.getState()}
+      store={store}
+      dispatch={store.dispatch.bind(store)}
+    />
+  </Provider>,
   document.getElementById("root")
 );

@@ -1,13 +1,8 @@
 import DialogsFunc from "./DialogsFunc";
 import React from "react";
-import usersApi from "../../api/api";
-
 class Dialogs extends React.Component {
   componentDidMount() {
-    usersApi.getSelfAccount().then((res) => {
-      this.props.updateProfile(res);
-      this.props.updateAvatar(res.photos.large);
-    });
+    this.props.thunkProfile();
   }
   render() {
     return (

@@ -1,8 +1,7 @@
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
 import { addMessageToState, toStateThisInput } from "../../reducers/dialogs";
-import { updateProfile, updateAvatar } from "../../reducers/updateProfile";
-import { setUsers } from "../../reducers/users";
+import { thunkProfile } from "../../reducers/updateProfile";
 
 const mapStateToProps = (state) => {
   return {
@@ -16,9 +15,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   //mapDispatchToProps
-  setUsers,
   addMessageToState,
   toStateThisInput,
-  updateProfile,
-  updateAvatar,
+  thunkProfile,
 })(Dialogs);

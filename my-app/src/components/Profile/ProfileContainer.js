@@ -1,12 +1,7 @@
 import Profile from "./Profile";
 import { connect } from "react-redux";
 import { addPostType, PostType } from "../../reducers/posts";
-import {
-  updateProfile,
-  updateAvatar,
-  updateBgImg,
-  updateGithub,
-} from "../../reducers/updateProfile";
+import { updateBgImg, thunkProfile } from "../../reducers/updateProfile";
 
 const mapStateToProps = (state) => {
   return {
@@ -20,27 +15,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addPostType: (payload) => {
-      dispatch(addPostType(payload));
-    },
-    PostType: (input) => {
-      dispatch(PostType(input));
-    },
-    updateProfile: (payload) => {
-      dispatch(updateProfile(payload));
-    },
-    updateAvatar: (payload) => {
-      dispatch(updateAvatar(payload));
-    },
-    updateBgImg: (payload) => {
-      dispatch(updateBgImg(payload));
-    },
-    updateGithub: (payload) => {
-      dispatch(updateGithub(payload));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, {
+  thunkProfile,
+  addPostType,
+  PostType,
+  updateBgImg,
+})(Profile);

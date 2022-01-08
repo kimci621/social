@@ -15,19 +15,47 @@ export default class FindUser extends Component {
   onPageChange = (currentPage) => {
     this.props.isFetching(true);
     this.props.changeActivePage(currentPage);
-    usersApi.getActivePage(this.props.activePage).then((res) => {
+    usersApi.getActivePage(currentPage).then((res) => {
       this.props.isFetching(false);
       this.props.setUsers(res.items);
     });
   };
 
-  moreUsers = (currentPage, count) => {
+  moreUsers = (currentPage) => {
+    this.props.moreUsers();
     this.props.isFetching(true);
+    console.log(this.props.usersPerPage);
+    debugger;
     this.props.changeActivePage(currentPage);
-    usersApi.getActivePage(this.props.activePage, count).then((res) => {
-      this.props.isFetching(false);
+    console.log(this.props.usersPerPage);
+    usersApi.getActivePage(this.props.activePage, this.props.usersPerPage).then((res) => {
       this.props.setUsers(res.items);
+      this.props.isFetching(false);
     });
+  };
+
+  deleteUser = (id) => {
+    this.props.isFetching(true);
+    usersApi.deleteUser(id);
+    this.onPageChange();
+    usersApi
+      .getActivePage(this.props.activePage, this.props.usersPerPage)
+      .then((res) => {
+        this.props.setUsers(res.items);
+        this.props.isFetching(false);
+      });
+  };
+
+  addUser = (id) => {
+    this.props.isFetching(true);
+    usersApi.followUser(id);
+    this.onPageChange();
+    usersApi
+      .getActivePage(this.props.activePage, this.props.usersPerPage)
+      .then((res) => {
+        this.props.setUsers(res.items);
+        this.props.isFetching(false);
+      });
   };
 
   render() {
@@ -51,8 +79,10 @@ export default class FindUser extends Component {
           onPageChange={this.onPageChange}
           activePage={this.props.activePage}
           usersPerPage={this.props.usersPerPage}
-          setUsers={this.props.setUsers}
-          updateUsers={this.props.updateUsers}
+          isDisabled={this.props.isDisabled}
+          deleteUser={this.deleteUser}
+          addUser={this.addUser}
+          chageUsersCount={this.props.moreUsers}
         />
       </>
     );

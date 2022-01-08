@@ -9,6 +9,9 @@ const instance = axios.create({
 });
 
 const usersApi = {
+  deleteUser: (id) => {
+    return instance.delete(`follow/${id}`, {});
+  },
   getUsers: () => {
     return instance.get(`users`, {}).then((res) => {
       return res.data;

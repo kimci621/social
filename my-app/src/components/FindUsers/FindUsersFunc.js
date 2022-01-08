@@ -1,10 +1,17 @@
 import { React } from "react";
 import styles from "./FindUsers.module.css";
 import { NavLink } from "react-router-dom";
-import usersApi from "../../api/api";
-
 const FindUserJsx = (props) => {
-  const UserWrapper = ({ avatar, name, status, city, key, id, btnStatus }) => {
+  const UserWrapper = ({
+    avatar,
+    name,
+    status,
+    city,
+    key,
+    id,
+    btnStatus,
+    isDisabled,
+  }) => {
     return (
       <div className={styles.userWrapper} key={key}>
         <div className={styles.leftUser}>
@@ -18,12 +25,15 @@ const FindUserJsx = (props) => {
           <button
             className={styles.followTrigger}
             type="button"
+            disabled={isDisabled}
             onClick={() => {
-              usersApi.followUser(id);
-              props.follow(id);
-              usersApi.getUsers().then((res) => {
-                props.updateUsers(res.items);
-              });
+              if (btnStatus === "follow") {
+                props.addUser(id);
+                props.follow(id);
+              } else {
+                props.deleteUser(id);
+                props.follow(id);
+              }
             }}
           >
             {btnStatus}
@@ -55,6 +65,7 @@ const FindUserJsx = (props) => {
           key={user.id}
           btnStatus={user.followed ? "unfollow" : "follow"}
           id={user.id}
+          isDisabled={props.isDisabled}
         />
       );
     });
@@ -68,7 +79,8 @@ const FindUserJsx = (props) => {
         className={styles.moreBtn}
         type="button"
         onClick={() => {
-          props.moreUsers(props.activePage, props.usersPerPage);
+          props.chageUsersCount(100);
+          props.moreUsers(props.activePage);
         }}
       >
         more users

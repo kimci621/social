@@ -1,22 +1,33 @@
 import usersApi from "../api/api";
-
 let initialState = {
   newFriends: [],
   friendsData: [],
-  usersPerPage: 100,
+  usersPerPage: 10,
+  isDisabled: false,
 };
 
 const usersReducer = (state = initialState, action) => {
   let newState = { ...state };
   switch (action.type) {
     case "SET-USERS":
-      newState.newFriends = [...state.newFriends].map((user) => {
-        return user;
-      });
-      newState.friendsData = [...state.friendsData];
       if (action.payload) {
         newState.newFriends = [...action.payload].map((user) => {
-          console.log(user);
+          return user;
+        });
+        newState.friendsData = [...action.payload].map((user) => { // eslint-disable-line
+          if (user.followed === true) {
+            return {
+              ...user,
+              photo:
+                "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+            };
+          }
+        });
+      } else {
+        newState.newFriends = [...state.newFriends].map((user) => {
+          return user;
+        });
+        newState.friendsData = [...state.friendsData].map((user) => {
           return user;
         });
       }
@@ -29,34 +40,42 @@ const usersReducer = (state = initialState, action) => {
       });
       return newState;
     case "FOLLOW":
+      newState.isDisabled = true;
       newState.friendsData = [...state.friendsData];
       newState.newFriends = newState.newFriends.map((user) => {
         if (user.id === action.payload) {
-          newState.friendsData.push({
-            ...user,
-            photo: user.photos.large
-              ? user.photos.large
-              : "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-          });
-          return { ...user, followed: !user.followed };
+          //unfollow
+          if (user.followed === true) {
+            return { ...user, followed: false };
+          }
+          //follow
+          else if (!user.followed) {
+            newState.friendsData.push({
+              ...user,
+              photo: user.photos.large
+                ? user.photos.large
+                : "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+            });
+            return { ...user, followed: true };
+          } else {
+            return { ...user };
+          }
         }
         return user;
       });
-      return newState;
-    case "UPDATE-ASIDE-FRIENDS":
-      newState.friendsData = [...state.friendsData];
-      newState.friendsData = [...action.payload].map((user) => {
-        // eslint-disable-line
+      let newFriendsData = newState.friendsData.filter(
+        (user) => user !== undefined
+      );
+      newState.friendsData = [...newFriendsData].map((user) => { // eslint-disable-line
         if (user.followed === true) {
-          console.log(user);
-          return {
-            ...user,
-            photo:
-              "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-          };
+          return user;
         }
       });
+      newState.isDisabled = false;
       return newState;
+      case "MORE-USERS":
+        newState.usersPerPage = 100;
+        return newState;
     default:
       return { ...state };
   }
@@ -72,9 +91,17 @@ const getUsers = (payload) => {
 const follow = (payload) => {
   return { type: "FOLLOW", payload: payload };
 };
-const updateUsers = (payload) => {
-  return { type: "UPDATE-ASIDE-FRIENDS", payload: payload };
+const moreUsers = () => {
+  return { type: "MORE-USERS"};
 };
 
-export { setUsers, getUsers, follow, updateUsers };
+const thunkUsersUpdate = () => {
+  return (dispatch) => {
+    usersApi.getUsers().then((res) => {
+      dispatch(setUsers(res.items));
+    });
+  };
+};
+
+export { setUsers, getUsers, follow, thunkUsersUpdate, moreUsers };
 export default usersReducer;
