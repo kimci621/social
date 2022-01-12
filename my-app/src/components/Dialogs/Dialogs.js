@@ -9,7 +9,6 @@ class Dialogs extends React.Component {
       <DialogsFunc
         textFromState={this.props.textFromState}
         addMessageToState={this.props.addMessageToState}
-        toStateThisInput={this.props.toStateThisInput}
         myProfile={this.props.myProfile}
         dialogs={this.props.dialogs}
         MyAvatar={this.props.MyAvatar}

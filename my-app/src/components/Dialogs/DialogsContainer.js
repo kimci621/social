@@ -1,6 +1,6 @@
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
-import { addMessageToState, toStateThisInput } from "../../reducers/dialogs";
+import { addMessageToState } from "../../reducers/dialogs";
 import { thunkProfile } from "../../reducers/updateProfile";
 import hoc from "../../hoc/hoc"
 
@@ -20,6 +20,5 @@ const dialogsHoc = hoc(Dialogs);
 export default connect(mapStateToProps, {
   //mapDispatchToProps
   addMessageToState,
-  toStateThisInput,
   thunkProfile,
 })(dialogsHoc);

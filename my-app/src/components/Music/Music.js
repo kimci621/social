@@ -93,8 +93,8 @@ class CardProfile extends React.Component {
 
   timeUpdate = () => {
     const duration = this.playerRef.duration;
-    const timelineWidth =
-      this.timelineRef.offsetWidth - this.playheadRef.offsetWidth;
+    // const timelineWidth =
+    //   this.timelineRef.offsetWidth - this.playheadRef.offsetWidth;
     const playPercent = 100 * (this.playerRef.currentTime / duration);
     this.playheadRef.style.width = playPercent + "%";
     const currentTime = this.formatTime(parseInt(this.playerRef.currentTime));
@@ -115,9 +115,9 @@ class CardProfile extends React.Component {
   };
 
   updatePlayer = () => {
-    const { musicList, index } = this.state;
-    const currentSong = musicList[index];
-    const audio = new Audio(currentSong.audio);
+    // const { musicList, index } = this.state;
+    // const currentSong = musicList[index];
+    // const audio = new Audio(currentSong.audio);
     this.playerRef.load();
   };
 
@@ -146,16 +146,16 @@ class CardProfile extends React.Component {
   };
 
   playOrPause = () => {
-    const { musicList, index, pause } = this.state;
-    const currentSong = musicList[index];
-    const audio = new Audio(currentSong.audio);
+    // const { musicList, index, pause } = this.state;
+    // const currentSong = musicList[index];
+    // const audio = new Audio(currentSong.audio);
     if (!this.state.pause) {
       this.playerRef.play();
     } else {
       this.playerRef.pause();
     }
     this.setState({
-      pause: !pause,
+      // pause: !pause,
     });
   };
 

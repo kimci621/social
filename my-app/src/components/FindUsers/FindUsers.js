@@ -11,6 +11,11 @@ export default class FindUser extends Component {
       this.props.setUsers(res.items);
     });
   }
+  componentDidUpdate() {
+    usersApi.getActivePage().then((res) => {
+      this.props.setUsers(res.items);
+    });
+  }
 
   onPageChange = (currentPage) => {
     this.props.isFetching(true);

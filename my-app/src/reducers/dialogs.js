@@ -17,7 +17,7 @@ const dialogsReducer = (state = initialState, action) => {
       let newMessage = {
         name: action.payload.name,
         avatar:  action.payload.avatar,
-        message: state.textFromStateDialogs,
+        message: action.payload.message,
       };
       newState.dialogData = [...state.dialogData];
       newState.dialogData.push(newMessage);
@@ -31,10 +31,7 @@ const dialogsReducer = (state = initialState, action) => {
 const addMessageToState = (payload) => {
   return { type: "SEND-MESSAGE", payload: payload };
 };
-const toStateThisInput = (input) => {
-  return { type: "INPUT-TO-STATE", input: input };
-};
 
-export { addMessageToState, toStateThisInput };
+export { addMessageToState };
 
 export default dialogsReducer;

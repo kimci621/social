@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
-
+import { useForm } from "react-hook-form";
 class ProfileFunc extends React.Component {
   state = {
     btnStatus: true,
@@ -12,6 +12,37 @@ class ProfileFunc extends React.Component {
   };
   btnActivityOff = () => {
     this.setState({ btnStatus: false });
+  };
+  Form = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { register, handleSubmit, reset } = useForm();
+    const onSubmit = (data) => {
+      this.props.addPostType({
+        text: data.post,
+        avatar:
+          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+      });
+      reset({ post: "" });
+    };
+    return (
+      <form
+        className="content--main--posts--add"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <input
+          autoFocus={false}
+          key="addPost"
+          name="addPost"
+          {...register("post", { required: true, pattern: /^[A-Za-z0-9]+$/i })}
+          className="content--main--posts--input"
+          placeholder="your news..."
+          type="text"
+        ></input>
+        <button className="content--main--posts--btn" type="submit">
+          Send
+        </button>
+      </form>
+    );
   };
   //inputApp start
   Post = ({ avatarSrc, input, count }) => {
@@ -54,45 +85,10 @@ class ProfileFunc extends React.Component {
         );
       });
     }
-    //input value of posts
-    let ref = React.createRef(null);
-    //Add new post on submit button press
-    let addNewPost = (e) => {
-      e.preventDefault();
-      if (ref.current.value) {
-        //dispatch
-        this.props.addPostType(this.props.avatar);
-      } else {
-        alert("Nothing to post!");
-      }
-    };
-    //dispatch
-    let changeState = () => {
-      this.props.PostType(ref.current.value);
-    };
     return (
       <div className="content--main--posts">
         <div className="content--main--posts--tittle">My Posts</div>
-        <form className="content--main--posts--add">
-          <input
-            autoFocus={true}
-            key="addPost"
-            name="addPost"
-            ref={ref}
-            className="content--main--posts--input"
-            placeholder="your news..."
-            type="text"
-            value={this.props.textFromState}
-            onChange={changeState}
-          ></input>
-          <button
-            className="content--main--posts--btn"
-            type="submit"
-            onClick={addNewPost}
-          >
-            Send
-          </button>
-        </form>
+        <this.Form />
         <div className="content--main--posts--old">{posts ? posts : null}</div>
       </div>
     );
@@ -106,15 +102,12 @@ class ProfileFunc extends React.Component {
     );
   };
   //profile info-s
-  ProfileeInfo = ({ avatar, name, github, status, job, statusValue }) => {
-//         statusState={this.props.status}- redux
-    let ref = React.createRef(null);
-    const toLocalStateOnChange = (value) => {
-      this.props.setLocalState(value);
-    };
-    const pushStatus = (payload) => {
-      this.props.setStatusToApi(payload);
-      this.props.clearLocalStatus();
+  ProfileeInfo = ({ avatar, name, github, status, job }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { register, handleSubmit, reset } = useForm();
+    const onSubmit = (data) => {
+      this.props.setStatusToApi(data.status);
+      reset({ status: "" });
     };
     return (
       <div className="content--main--user">
@@ -133,7 +126,10 @@ class ProfileFunc extends React.Component {
           </div>
           <div className="content--main--user--info--about">
             Status: <p>{status}</p>
-            <form className="profileStatusEdit">
+            <form
+              className="profileStatusEdit"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <textarea
                 onBlur={() => {
                   this.btnActivityOn();
@@ -143,20 +139,13 @@ class ProfileFunc extends React.Component {
                 }}
                 className="profileStatusEditArea"
                 placeholder="Type your new status"
-                value={statusValue}
-                ref={ref}
-                onChange={() => {
-                  toLocalStateOnChange(ref.current.value);
-                }}
+                {...register("status")}
                 maxLength="300"
               ></textarea>
               <button
                 className="profileStatusEditBtn"
                 type="submit"
                 disabled={this.state.btnStatus}
-                onClick={() => {
-                  pushStatus(this.props.statusLocal);
-                }}
               >
                 edit
               </button>
@@ -180,7 +169,6 @@ class ProfileFunc extends React.Component {
           status={this.props.statusState}
           avatar={this.props.avatar}
           github={this.props.github}
-          statusValue={this.props.statusLocal}
         />
         <this.InputApp />
       </div>

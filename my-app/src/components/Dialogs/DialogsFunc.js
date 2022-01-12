@@ -3,9 +3,18 @@ import stylesW from "./css/DialogWindow.module.css";
 import stylesI from "./css/DialogInput.module.css";
 import { Link } from "react-router-dom";
 import { AddUser, AddDialog } from "./AddElems";
-import { useRef } from "react";
+import { useForm } from "react-hook-form";
 
 const DialogsFunc = (props) => {
+  const { register, handleSubmit, reset } = useForm();
+  const onSubmit = (data) => {
+    props.addMessageToState({
+            name: props.myProfile.fullName,
+            avatar: props.MyAvatar,
+            message: data.message
+          });
+    reset({ message: "" });
+  };
   //input start
   const AddMyDialog = ({ name, avatar, message }) => {
     return (
@@ -19,35 +28,16 @@ const DialogsFunc = (props) => {
     );
   };
   const DialogInput = () => {
-    const ref = useRef(null);
-
-    const sendMesage = (e) => {
-      e.preventDefault();
-      if (props.textFromState) {
-        props.addMessageToState({
-          name: props.myProfile.fullName,
-          avatar: props.MyAvatar,
-        });
-      } else {
-        alert("type the message!");
-      }
-    };
-
-    let onTypeText = () => {
-      props.toStateThisInput(ref.current.value);
-    };
     return (
-      <form className={stylesI.wrapper}>
+      <form className={stylesI.wrapper} onSubmit={handleSubmit(onSubmit)}>
         <input
-          autoFocus={true}
+          autoFocus={false}
           placeholder="me: "
           className={stylesI.input}
           type="text"
-          ref={ref}
-          value={props.textFromState}
-          onChange={onTypeText}
+          {...register("message")}
         />
-        <button className={stylesI.btn} type="submit" onClick={sendMesage}>
+        <button className={stylesI.btn} type="submit">
           send
         </button>
       </form>

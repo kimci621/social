@@ -43,7 +43,6 @@ export default class Profile extends React.Component {
         backgroundImage={this.props.backgroundImage}
         github={this.props.github}
         addPostType={this.props.addPostType}
-        PostType={this.props.PostType}
       />
     );
   }

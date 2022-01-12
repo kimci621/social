@@ -1,7 +1,7 @@
 import Profile from "./Profile";
 import hoc from "../../hoc/hoc";
 import { connect } from "react-redux";
-import { addPostType, PostType } from "../../reducers/posts";
+import { addPostType } from "../../reducers/posts";
 import {
   updateBgImg,
   thunkProfile,
@@ -31,7 +31,6 @@ export default connect(mapStateToProps, {
   setStatusThunk,
   updateStatusOnPage,
   addPostType,
-  PostType,
   updateBgImg,
   setStatus,
 })(hocProfile);
