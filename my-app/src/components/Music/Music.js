@@ -1,237 +1,257 @@
+import React from "react";
 import "./music.css";
-import { Link } from "react-router-dom";
+class CardProfile extends React.Component {
+  state = {
+    index: 3,
+    currentTime: "0:00",
+    musicList: [
+      {
+        name: "Nice piano and ukulele",
+        author: "Royalty",
+        img: "https://www.bensound.com/bensound-img/buddy.jpg",
+        audio: "https://www.bensound.com/bensound-music/bensound-buddy.mp3",
+        duration: "2:02",
+      },
+      {
+        name: "Gentle acoustic",
+        author: "Acoustic",
+        img: "https://www.bensound.com/bensound-img/sunny.jpg",
+        audio: "https://www.bensound.com//bensound-music/bensound-sunny.mp3",
+        duration: "2:20",
+      },
+      {
+        name: "Corporate motivational",
+        author: "Corporate",
+        img: "https://www.bensound.com/bensound-img/energy.jpg",
+        audio: "https://www.bensound.com/bensound-music/bensound-energy.mp3",
+        duration: "2:59",
+      },
+      {
+        name: "Slow cinematic",
+        author: "Royalty",
+        img: "https://www.bensound.com/bensound-img/slowmotion.jpg",
+        audio:
+          "https://www.bensound.com/bensound-music/bensound-slowmotion.mp3",
+        duration: "3:26",
+      },
+    ],
+    pause: false,
+  };
 
-const Music = (props) => {
-  //   let now_playing = document.querySelector(".now-playing");
-  //   let track_art = document.querySelector(".track-art");
-  //   let track_name = document.querySelector(".track-name");
-  //   let track_artist = document.querySelector(".track-artist");
+  componentDidMount() {
+    this.playerRef.addEventListener("timeupdate", this.timeUpdate, false);
+    this.playerRef.addEventListener("ended", this.nextSong, false);
+    this.timelineRef.addEventListener("click", this.changeCurrentTime, false);
+    this.timelineRef.addEventListener("mousemove", this.hoverTimeLine, false);
+    this.timelineRef.addEventListener("mouseout", this.resetTimeLine, false);
+  }
 
-  //   let playpause_btn = document.querySelector(".playpause-track");
-  //   let next_btn = document.querySelector(".next-track");
-  //   let prev_btn = document.querySelector(".prev-track");
+  componentWillUnmount() {
+    this.playerRef.removeEventListener("timeupdate", this.timeUpdate);
+    this.playerRef.removeEventListener("ended", this.nextSong);
+    this.timelineRef.removeEventListener("click", this.changeCurrentTime);
+    this.timelineRef.removeEventListener("mousemove", this.hoverTimeLine);
+    this.timelineRef.removeEventListener("mouseout", this.resetTimeLine);
+  }
 
-  //   let seek_slider = document.querySelector(".seek_slider");
-  //   let volume_slider = document.querySelector(".volume_slider");
-  //   let curr_time = document.querySelector(".current-time");
-  //   let total_duration = document.querySelector(".total-duration");
+  changeCurrentTime = (e) => {
+    const duration = this.playerRef.duration;
 
-  //   let track_index = 0;
-  //   let isPlaying = false;
-  //   let updateTimer;
+    const playheadWidth = this.timelineRef.offsetWidth;
+    const offsetWidht = this.timelineRef.offsetLeft;
+    const userClickWidht = e.clientX - offsetWidht;
 
-  //   // Create new audio element
-  //   let curr_track = document.createElement("audio");
+    const userClickWidhtInPercent = (userClickWidht * 100) / playheadWidth;
 
-  //   // Define the tracks that have to be played
-  //   let track_list = [
-  //     {
-  //       name: "Night Owl",
-  //       artist: "Broke For Free",
-  //       image:
-  //         "https://images.pexels.com/photos/2264753/pexels-photo-2264753.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-  //       path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3",
-  //     },
-  //     {
-  //       name: "Enthusiast",
-  //       artist: "Tours",
-  //       image:
-  //         "https://images.pexels.com/photos/3100835/pexels-photo-3100835.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-  //       path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3",
-  //     },
-  //     {
-  //       name: "Shipping Lanes",
-  //       artist: "Chad Crouch",
-  //       image:
-  //         "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-  //       path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3",
-  //     },
-  //   ];
+    this.playheadRef.style.width = userClickWidhtInPercent + "%";
+    this.playerRef.currentTime = (duration * userClickWidhtInPercent) / 100;
+  };
 
-  //   function random_bg_color() {
-  //     // Get a number between 64 to 256 (for getting lighter colors)
-  //     let red = Math.floor(Math.random() * 256) + 64;
-  //     let green = Math.floor(Math.random() * 256) + 64;
-  //     let blue = Math.floor(Math.random() * 256) + 64;
+  hoverTimeLine = (e) => {
+    const duration = this.playerRef.duration;
 
-  //     // Construct a color withe the given values
-  //     let bgColor = "rgb(" + red + "," + green + "," + blue + ")";
+    const playheadWidth = this.timelineRef.offsetWidth;
 
-  //     // Set the background to that color
-  //     // document.body.style.background = bgColor;
-  //   }
+    const offsetWidht = this.timelineRef.offsetLeft;
+    const userClickWidht = e.clientX - offsetWidht;
+    const userClickWidhtInPercent = (userClickWidht * 100) / playheadWidth;
 
-  //   function loadTrack(track_index) {
-  //     clearInterval(updateTimer);
-  //     resetValues();
-  //     curr_track.src = track_list[track_index].path;
-  //     curr_track.load();
+    if (userClickWidhtInPercent <= 100) {
+      this.hoverPlayheadRef.style.width = userClickWidhtInPercent + "%";
+    }
 
-  //     // track_art.style.backgroundImage =
-  //       // "url(" + track_list[track_index].image + ")";
-  //     // track_name.textContent = track_list[track_index].name;
-  //     // track_artist.textContent = track_list[track_index].artist;
-  //     // now_playing.textContent =
-  //       // "PLAYING " + (track_index + 1) + " OF " + track_list.length;
+    const time = (duration * userClickWidhtInPercent) / 100;
 
-  //     updateTimer = setInterval(seekUpdate, 1000);
-  //     curr_track.addEventListener("ended", nextTrack);
-  //     random_bg_color();
-  //   }
+    if (time >= 0 && time <= duration) {
+      this.hoverPlayheadRef.dataset.content = this.formatTime(time);
+    }
+  };
 
-  //   function resetValues() {
-  //     // curr_time.textContent = "00:00";
-  //     // total_duration.textContent = "00:00";
-  //     // seek_slider.value = 0;
-  //   }
+  resetTimeLine = () => {
+    this.hoverPlayheadRef.style.width = 0;
+  };
 
-  //   // Load the first track in the tracklist
-  //   loadTrack(track_index);
+  timeUpdate = () => {
+    const duration = this.playerRef.duration;
+    const timelineWidth =
+      this.timelineRef.offsetWidth - this.playheadRef.offsetWidth;
+    const playPercent = 100 * (this.playerRef.currentTime / duration);
+    this.playheadRef.style.width = playPercent + "%";
+    const currentTime = this.formatTime(parseInt(this.playerRef.currentTime));
+    this.setState({
+      currentTime,
+    });
+  };
 
-  //   function playpauseTrack() {
-  //     if (!isPlaying) playTrack();
-  //     else pauseTrack();
-  //   }
+  formatTime = (currentTime) => {
+    const minutes = Math.floor(currentTime / 60);
+    let seconds = Math.floor(currentTime % 60);
 
-  //   function playTrack() {
-  //     curr_track.play();
-  //     isPlaying = true;
-  //     playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
-  //   }
+    seconds = seconds >= 10 ? seconds : "0" + (seconds % 60);
 
-  //   function pauseTrack() {
-  //     curr_track.pause();
-  //     isPlaying = false;
-  //     playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
-  //   }
+    const formatTime = minutes + ":" + seconds;
 
-  //   function nextTrack() {
-  //     if (track_index < track_list.length - 1) track_index += 1;
-  //     else track_index = 0;
-  //     loadTrack(track_index);
-  //     playTrack();
-  //   }
+    return formatTime;
+  };
 
-  //   function prevTrack() {
-  //     if (track_index > 0) track_index -= 1;
-  //     else track_index = track_list.length;
-  //     loadTrack(track_index);
-  //     playTrack();
-  //   }
+  updatePlayer = () => {
+    const { musicList, index } = this.state;
+    const currentSong = musicList[index];
+    const audio = new Audio(currentSong.audio);
+    this.playerRef.load();
+  };
 
-  //   function seekTo() {
-  //     // let seekto = curr_track.duration * (seek_slider.value / 100);
-  //     // curr_track.currentTime = seekto;
-  //   }
+  nextSong = () => {
+    const { musicList, index, pause } = this.state;
 
-  //   function setVolume() {
-  //     // curr_track.volume = volume_slider.value / 100;
-  //   }
+    this.setState({
+      index: (index + 1) % musicList.length,
+    });
+    this.updatePlayer();
+    if (pause) {
+      this.playerRef.play();
+    }
+  };
 
-  //   function seekUpdate() {
-  //     let seekPosition = 0;
+  prevSong = () => {
+    const { musicList, index, pause } = this.state;
 
-  //     if (!isNaN(curr_track.duration)) {
-  //       // seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+    this.setState({
+      index: (index + musicList.length - 1) % musicList.length,
+    });
+    this.updatePlayer();
+    if (pause) {
+      this.playerRef.play();
+    }
+  };
 
-  //       // seek_slider.value = seekPosition;
+  playOrPause = () => {
+    const { musicList, index, pause } = this.state;
+    const currentSong = musicList[index];
+    const audio = new Audio(currentSong.audio);
+    if (!this.state.pause) {
+      this.playerRef.play();
+    } else {
+      this.playerRef.pause();
+    }
+    this.setState({
+      pause: !pause,
+    });
+  };
 
-  //       let currentMinutes = Math.floor(curr_track.currentTime / 60);
-  //       let currentSeconds = Math.floor(
-  //         curr_track.currentTime - currentMinutes * 60
-  //       );
-  //       let durationMinutes = Math.floor(curr_track.duration / 60);
-  //       let durationSeconds = Math.floor(
-  //         curr_track.duration - durationMinutes * 60
-  //       );
+  clickAudio = (key) => {
+    const { pause } = this.state;
 
-  //       if (currentSeconds < 10) {
-  //         currentSeconds = "0" + currentSeconds;
-  //       }
-  //       if (durationSeconds < 10) {
-  //         durationSeconds = "0" + durationSeconds;
-  //       }
-  //       if (currentMinutes < 10) {
-  //         currentMinutes = "0" + currentMinutes;
-  //       }
-  //       if (durationMinutes < 10) {
-  //         durationMinutes = "0" + durationMinutes;
-  //       }
+    this.setState({
+      index: key,
+    });
 
-  //       // curr_time.textContent = currentMinutes + ":" + currentSeconds;
-  //       // total_duration.textContent = durationMinutes + ":" + durationSeconds;
-  //     }
-  //   }
+    this.updatePlayer();
+    if (pause) {
+      this.playerRef.play();
+    }
+  };
 
-  return (
-    <div className="wrapper">
-      <nav>
-        <Link to="music"></Link>
-      </nav>
-      <div className="player">
-        <div className="details">
-          <div className="now-playing">PLAYING x OF y</div>
-          <div className="track-art"></div>
-          <div className="track-name">Track Name</div>
-          <div className="track-artist">Track Artist</div>
-        </div>
-        <div className="buttons">
-          <div
-            className="prev-track"
-            // onClick={() => {
-            //   prevTrack();
-            // }}
-          >
-            <i className="fa fa-step-backward fa-2x"></i>
+  render() {
+    const { musicList, index, currentTime, pause } = this.state;
+    const currentSong = musicList[index];
+    return (
+      <div className="card-wrapper">
+        <div className="card">
+          <div className="current-song">
+            <audio ref={(ref) => (this.playerRef = ref)}>
+              <source src={currentSong.audio} type="audio/ogg" />
+              Your browser does not support the audio element.
+            </audio>
+            <div className="img-wrap">
+              <img src={currentSong.img} alt={"music"} />
+            </div>
+            <span className="song-name">{currentSong.name}</span>
+            <span className="song-autor">{currentSong.author}</span>
+
+            <div className="time">
+              <div className="current-time">{currentTime}</div>
+              <div className="end-time">{currentSong.duration}</div>
+            </div>
+
+            <div ref={(ref) => (this.timelineRef = ref)} id="timeline">
+              <div ref={(ref) => (this.playheadRef = ref)} id="playhead"></div>
+              <div
+                ref={(ref) => (this.hoverPlayheadRef = ref)}
+                class="hover-playhead"
+                data-content="0:00"
+              ></div>
+            </div>
+
+            <div className="controls">
+              <button
+                onClick={this.prevSong}
+                className="prev prev-next current-btn"
+              >
+                <i className="fas fa-backward"></i>
+              </button>
+
+              <button onClick={this.playOrPause} className="play current-btn">
+                {!pause ? (
+                  <i className="fas fa-play"></i>
+                ) : (
+                  <i class="fas fa-pause"></i>
+                )}
+              </button>
+              <button
+                onClick={this.nextSong}
+                className="next prev-next current-btn"
+              >
+                <i className="fas fa-forward"></i>
+              </button>
+            </div>
           </div>
-          <div
-            className="playpause-track"
-            // onClick={() => {
-            //   playpauseTrack();
-            // }}
-          >
-            <i className="fa fa-play-circle fa-5x"></i>
+          <div className="play-list">
+            {musicList.map((music, key = 0) => (
+              <div
+                key={key}
+                onClick={() => this.clickAudio(key)}
+                className={
+                  "track " +
+                  (index === key && !pause ? "current-audio" : "") +
+                  (index === key && pause ? "play-now" : "")
+                }
+              >
+                <img className="track-img" src={music.img} alt={"music"} />
+                <div className="track-discr">
+                  <span className="track-name">{music.name}</span>
+                  <span className="track-author">{music.author}</span>
+                </div>
+                <span className="track-duration">
+                  {index === key ? currentTime : music.duration}
+                </span>
+              </div>
+            ))}
           </div>
-          <div
-            className="next-track"
-            // onClick={() => {
-            //   nextTrack();
-            // }}
-          >
-            <i className="fa fa-step-forward fa-2x"></i>
-          </div>
-        </div>
-        <div className="slider_container">
-          <div className="current-time">00:00</div>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value="0"
-            className="seek_slider"
-            // onChange={() => {
-            //   seekTo();
-            // }}
-          />
-          <div className="total-duration">00:00</div>
-        </div>
-        <div className="slider_container">
-          <i className="fa fa-volume-down"></i>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value="99"
-            className="volume_slider"
-            // onChange={() => {
-            //   setVolume();
-            // }}
-          />
-          <i className="fa fa-volume-up"></i>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-export default Music;
+export default CardProfile;

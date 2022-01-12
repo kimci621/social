@@ -22,7 +22,11 @@ export const setUserLoginData = (payload) => {
 export const thunkLogin = () => {
   return (dispatch) => {
     usersApi.getAuthStatus().then((res) => {
-      dispatch(setUserLoginData(res.login));
+      if (res) {
+        dispatch(setUserLoginData(res.login));
+      }else{
+        dispatch(setUserLoginData("login"));
+      }
     });
   };
 };

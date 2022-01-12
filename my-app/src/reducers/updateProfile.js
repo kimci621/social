@@ -4,6 +4,7 @@ let initialState = {
   avatar: null,
   bgImg: null,
   github: null,
+  status: "",
 };
 const profileUpdateReducer = (state = initialState, action) => {
   let newState = { ...state };
@@ -32,6 +33,12 @@ const profileUpdateReducer = (state = initialState, action) => {
       };
       newState.github = action.payload;
       return newState;
+    case "SET_STATUS":
+      newState.status = {
+        ...state.status,
+      };
+      newState.status = action.payload;
+      return newState;
     default:
       return { ...state };
   }
@@ -50,14 +57,41 @@ export const updateBgImg = (payload) => {
 export const updateGithub = (payload) => {
   return { type: "UPDATE-GITHUB", payload: payload };
 };
+export const setStatus = (payload) => {
+  return { type: "SET_STATUS", payload: payload };
+};
 
 export const thunkProfile = () => {
   return (dispatch) => {
     usersApi.getSelfAccount().then((res) => {
       dispatch(updateProfile(res));
-      dispatch(updateAvatar(res.photos.large));
+      res.photos.large
+        ? dispatch(updateAvatar(res.photos.large))
+        : dispatch(
+            updateAvatar(
+              "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg"
+            )
+          );
       dispatch(updateGithub(res.contacts.github));
     });
   };
 };
+export const updateStatusOnPage = () => {
+  return (dispatch) => {
+    usersApi.getStatus().then((res) => {
+      dispatch(setStatus(res.data));
+    });
+  };
+};
+
+export const setStatusThunk = (payload) => {
+  return (dispatch) => {
+    usersApi.updateStatus(payload).then((res) => {
+      if (res.data.resultCode === 0) {
+        dispatch(setStatus(payload));
+      }
+    });
+  };
+};
+
 export default profileUpdateReducer;

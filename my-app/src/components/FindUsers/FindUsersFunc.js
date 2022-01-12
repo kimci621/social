@@ -79,7 +79,6 @@ const FindUserJsx = (props) => {
         className={styles.moreBtn}
         type="button"
         onClick={() => {
-          props.chageUsersCount(100);
           props.moreUsers(props.activePage);
         }}
       >

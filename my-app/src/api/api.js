@@ -8,7 +8,12 @@ const instance = axios.create({
   },
 });
 
+const myUserId = "21352";
+
 const usersApi = {
+  changeAvatar: (url) => {
+    return instance.put("profile/photo", { image: url });
+  },
   deleteUser: (id) => {
     return instance.delete(`follow/${id}`, {});
   },
@@ -17,8 +22,8 @@ const usersApi = {
       return res.data;
     });
   },
-  getSelfAccount: () => {
-    return instance.get("profile/2").then((res) => {
+  getSelfAccount: (userId = myUserId) => {
+    return instance.get(`profile/${userId}`).then((res) => {
       return res.data;
     });
   },
@@ -39,6 +44,16 @@ const usersApi = {
       }
     });
   },
+  updateStatus: (payload) => {
+    return instance.put("profile/status", {
+      status: payload,
+    });
+  },
+  getStatus: () => {
+    return instance.get("profile/status/21352");
+  },
 };
+
+
 
 export default usersApi;

@@ -51,9 +51,10 @@
 }
 
 .content--main--user--info--about p {
-  padding: 0;
+  padding: 5px 0;
   margin: 0;
   font-size: 12px;
+  overflow-x: auto;
 }
 
 /* pure css */
@@ -154,4 +155,26 @@
   position: absolute;
   top: 40px;
   left: 35px;
+}
+
+.profileStatusEdit {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+.profileStatusEditArea {
+  height: 30px;
+  padding: 2px;
+  margin: 5px 10px 5px 0;
+  border-radius: 6px;
+}
+
+.profileStatusEditBtn {
+  margin: 15px 5px 5px 0px;
+  padding: 2px 15px;
+  border: 1px solid #26262650;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.5s ease;
 }

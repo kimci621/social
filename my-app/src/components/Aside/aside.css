@@ -58,7 +58,7 @@
   text-shadow: 0px 0px 10px #fff;
 }
 
-.content--nav--item a{
+.content--nav--item a {
   cursor: pointer;
   text-decoration: none;
   color: inherit;
@@ -73,7 +73,7 @@
   margin-top: 30px;
 }
 
-.friends-name{
+.friends-name {
   color: #fff;
   padding: 0;
   margin: 0;

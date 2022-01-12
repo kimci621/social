@@ -7,7 +7,7 @@ import AsideContainer from "../Aside/AsideContainer";
 import ProfileContainer from "../Profile/ProfileContainer";
 import DialogsContainer from "../Dialogs/DialogsContainer";
 import News from "../News/News";
-import Music from "../Music/Music";
+import CardProfile from "../Music/Music";
 import Settings from "../Settings/Settings";
 import Autorisation from "../Autorisation/Autorisation";
 import Footer from "../Footer/Footer";
@@ -28,7 +28,7 @@ function App() {
               <Route path="/profile/*" element={<ProfileContainer />} />
               <Route path="/messages/*" element={<DialogsContainer />} />
               <Route path="/news/*" element={<News />} />
-              <Route path="/music/*" element={<Music />} />
+              <Route path="/music/*" element={<CardProfile />} />
               <Route path="/settings/*" element={<Settings />} />
               <Route path="/login/*" element={<Autorisation />} />
               <Route path="/users/*" element={<FindUsersContainer />} />

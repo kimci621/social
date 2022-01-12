@@ -3,6 +3,7 @@ let initialState = {
   newFriends: [],
   friendsData: [],
   usersPerPage: 10,
+  allUsersPerPage: 100,
   isDisabled: false,
 };
 
@@ -73,9 +74,6 @@ const usersReducer = (state = initialState, action) => {
       });
       newState.isDisabled = false;
       return newState;
-      case "MORE-USERS":
-        newState.usersPerPage = 100;
-        return newState;
     default:
       return { ...state };
   }
@@ -91,10 +89,6 @@ const getUsers = (payload) => {
 const follow = (payload) => {
   return { type: "FOLLOW", payload: payload };
 };
-const moreUsers = () => {
-  return { type: "MORE-USERS"};
-};
-
 const thunkUsersUpdate = () => {
   return (dispatch) => {
     usersApi.getUsers().then((res) => {
@@ -103,5 +97,5 @@ const thunkUsersUpdate = () => {
   };
 };
 
-export { setUsers, getUsers, follow, thunkUsersUpdate, moreUsers };
+export { setUsers, getUsers, follow, thunkUsersUpdate };
 export default usersReducer;

@@ -22,16 +22,14 @@ export default class FindUser extends Component {
   };
 
   moreUsers = (currentPage) => {
-    this.props.moreUsers();
     this.props.isFetching(true);
-    console.log(this.props.usersPerPage);
-    debugger;
     this.props.changeActivePage(currentPage);
-    console.log(this.props.usersPerPage);
-    usersApi.getActivePage(this.props.activePage, this.props.usersPerPage).then((res) => {
-      this.props.setUsers(res.items);
-      this.props.isFetching(false);
-    });
+    usersApi
+      .getActivePage(this.props.activePage, this.props.allUsersPerPage)
+      .then((res) => {
+        this.props.setUsers(res.items);
+        this.props.isFetching(false);
+      });
   };
 
   deleteUser = (id) => {
@@ -63,7 +61,6 @@ export default class FindUser extends Component {
     for (let i = 1; i <= this.props.allPages / 1000; i++) {
       li.push(i);
     }
-
     return (
       <>
         {this.props.isFetchingState ? (
@@ -82,7 +79,6 @@ export default class FindUser extends Component {
           isDisabled={this.props.isDisabled}
           deleteUser={this.deleteUser}
           addUser={this.addUser}
-          chageUsersCount={this.props.moreUsers}
         />
       </>
     );

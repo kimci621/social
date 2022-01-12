@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
 import React from "react";
 
-const ProfileFunc = (props) => {
+class ProfileFunc extends React.Component {
+  state = {
+    btnStatus: true,
+  };
+  btnActivityOn = () => {
+    setTimeout(() => {
+      this.setState({ btnStatus: true });
+    }, 1000);
+  };
+  btnActivityOff = () => {
+    this.setState({ btnStatus: false });
+  };
   //inputApp start
-  const Post = ({ avatarSrc, input, count }) => {
+  Post = ({ avatarSrc, input, count }) => {
     //refactor !!
     let likeCounter = (e) => {
       e.preventDefault();
@@ -27,15 +38,15 @@ const ProfileFunc = (props) => {
     );
   };
 
-  const InputApp = () => {
+  InputApp = () => {
     //All posts from state for export to Profile
     let posts;
-    if (!props.myPosts) {
+    if (!this.props.myPosts) {
       return null;
     } else {
-      posts = props.myPosts.map((post) => {
+      posts = this.props.myPosts.map((post) => {
         return (
-          <Post
+          <this.Post
             avatarSrc={post.avatar}
             input={post.postText}
             count={post.likesCount}
@@ -50,14 +61,14 @@ const ProfileFunc = (props) => {
       e.preventDefault();
       if (ref.current.value) {
         //dispatch
-        props.addPostType(props.avatar);
+        this.props.addPostType(this.props.avatar);
       } else {
         alert("Nothing to post!");
       }
     };
     //dispatch
     let changeState = () => {
-      props.PostType(ref.current.value);
+      this.props.PostType(ref.current.value);
     };
     return (
       <div className="content--main--posts">
@@ -71,7 +82,7 @@ const ProfileFunc = (props) => {
             className="content--main--posts--input"
             placeholder="your news..."
             type="text"
-            value={props.textFromState}
+            value={this.props.textFromState}
             onChange={changeState}
           ></input>
           <button
@@ -89,13 +100,22 @@ const ProfileFunc = (props) => {
   //inputApp end
 
   //background-image
-  const ProfileBgApp = ({ imgSrc }) => {
+  ProfileBgApp = ({ imgSrc }) => {
     return (
       <img className="content--main--img" src={imgSrc} alt="react-img"></img>
     );
   };
   //profile info-s
-  const ProfileeInfo = ({ avatar, name, github, about, job }) => {
+  ProfileeInfo = ({ avatar, name, github, status, job, statusValue }) => {
+//         statusState={this.props.status}- redux
+    let ref = React.createRef(null);
+    const toLocalStateOnChange = (value) => {
+      this.props.setLocalState(value);
+    };
+    const pushStatus = (payload) => {
+      this.props.setStatusToApi(payload);
+      this.props.clearLocalStatus();
+    };
     return (
       <div className="content--main--user">
         <img
@@ -112,29 +132,60 @@ const ProfileFunc = (props) => {
             github: {github ? github : "no link :c"}
           </div>
           <div className="content--main--user--info--about">
-            About: <p>{about ? about : "no status"}</p>
+            Status: <p>{status}</p>
+            <form className="profileStatusEdit">
+              <textarea
+                onBlur={() => {
+                  this.btnActivityOn();
+                }}
+                onFocus={() => {
+                  this.btnActivityOff();
+                }}
+                className="profileStatusEditArea"
+                placeholder="Type your new status"
+                value={statusValue}
+                ref={ref}
+                onChange={() => {
+                  toLocalStateOnChange(ref.current.value);
+                }}
+                maxLength="300"
+              ></textarea>
+              <button
+                className="profileStatusEditBtn"
+                type="submit"
+                disabled={this.state.btnStatus}
+                onClick={() => {
+                  pushStatus(this.props.statusLocal);
+                }}
+              >
+                edit
+              </button>
+            </form>
           </div>
         </div>
       </div>
     );
   };
-  return (
-    <div className="content--main">
-      <nav>
-        <Link to="profile"></Link>
-      </nav>
-      <ProfileBgApp imgSrc={props.backgroundImage} />
+  render() {
+    return (
+      <div className="content--main">
+        <nav>
+          <Link to="profile"></Link>
+        </nav>
+        <this.ProfileBgApp imgSrc={this.props.backgroundImage} />
 
-      <ProfileeInfo
-        name={props.myProfile.fullName}
-        job={props.myProfile.lookingForAJob}
-        about={props.myProfile.aboutMe}
-        avatar={props.avatar}
-        github={props.github}
-      />
-      <InputApp />
-    </div>
-  );
-};
+        <this.ProfileeInfo
+          name={this.props.myProfile.fullName}
+          job={this.props.myProfile.lookingForAJob}
+          status={this.props.statusState}
+          avatar={this.props.avatar}
+          github={this.props.github}
+          statusValue={this.props.statusLocal}
+        />
+        <this.InputApp />
+      </div>
+    );
+  }
+}
 
 export default ProfileFunc;
