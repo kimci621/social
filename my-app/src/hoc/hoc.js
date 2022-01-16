@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 const hoc = (Component) => {
   return class HocForComponents extends React.Component {
     render() {
-      if (this.props.login === "login") {
+      if (this.props.login === null) {
         return <Navigate to="/login"></Navigate>;
       } else {
         return <Component {...this.props} />;

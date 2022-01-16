@@ -28,8 +28,16 @@
   border: 1px solid #262626;
   box-shadow: 1px 1px 1px 1px #26262636;
 }
+.inputError {
+  margin-bottom: 15px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  height: 26px;
+  width: 300px;
+  border: 2px solid #db2518;
+}
 
-.jobChecker{
+.jobChecker {
   display: flex;
   justify-content: space-between;
   align-items: center;

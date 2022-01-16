@@ -1,4 +1,11 @@
 import axios from "axios";
+/*
+{email: required(string) "kimciwork@gmail.com"
+password: required(string) "k5uHUcEagwv_ieV"
+rememberMe: (boolean)
+captcha: (boolean)
+resultCode is 10 in response data.}
+*/
 
 const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
@@ -37,6 +44,17 @@ const usersApi = {
   followUser: (id) => {
     return instance.post(`follow/${id}`, {});
   },
+  updateStatus: (payload) => {
+    return instance.put("profile/status", {
+      status: payload,
+    });
+  },
+  getStatus: (userId = myUserId) => {
+    return instance.get(`profile/status/${userId}`);
+  },
+};
+
+export const authApi = {
   getAuthStatus: () => {
     return instance.get("auth/me").then((res) => {
       if (res.data.resultCode === 0) {
@@ -44,16 +62,16 @@ const usersApi = {
       }
     });
   },
-  updateStatus: (payload) => {
-    return instance.put("profile/status", {
-      status: payload,
+  loginApi: (email, password, rememberMe = true) => {
+    return instance.post("auth/login", {
+      email: email,
+      password: password,
+      remember: rememberMe,
     });
   },
-  getStatus: () => {
-    return instance.get("profile/status/21352");
+  logOutApi: () => {
+    return instance.delete("auth/login");
   },
 };
-
-
 
 export default usersApi;

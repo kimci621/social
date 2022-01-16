@@ -9,7 +9,7 @@ import DialogsContainer from "../Dialogs/DialogsContainer";
 import News from "../News/News";
 import CardProfile from "../Music/Music";
 import Settings from "../Settings/Settings";
-import Autorisation from "../Autorisation/Autorisation";
+import AuthContainer from "../Autorisation/AuthContainer";
 import Footer from "../Footer/Footer";
 import FindUsersContainer from "../FindUsers/FindUsersContainer";
 //css
@@ -30,7 +30,7 @@ function App() {
               <Route path="/news/*" element={<News />} />
               <Route path="/music/*" element={<CardProfile />} />
               <Route path="/settings/*" element={<Settings />} />
-              <Route path="/login/*" element={<Autorisation />} />
+              <Route path="/login/*" element={<AuthContainer />} />
               <Route path="/users/*" element={<FindUsersContainer />} />
             </Routes>
           </div>

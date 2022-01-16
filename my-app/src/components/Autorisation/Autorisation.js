@@ -1,10 +1,17 @@
 import styles from "./Autorisation.module.css";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-const Autorisation = () => {
-  const { register, handleSubmit, reset } = useForm();
-
+import { Navigate } from "react-router-dom";
+const Autorisation = (props) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm({ mode: "onBlur" });
+  // "kimciwork@gmail.com", "k5uHUcEagwv_ieV"
   const onSubmit = (data) => {
+    props.loginPostThunk(data.email, data.password, data.remember);
     reset({
       login: "",
       github: "",
@@ -12,8 +19,12 @@ const Autorisation = () => {
       job: "",
       remember: "",
     });
-    console.log(data);
   };
+  
+  if (props.login != null) {
+    return <Navigate to="/profile"></Navigate>;
+  }
+
   return (
     <div className={styles.wrapper}>
       <nav>
@@ -23,39 +34,27 @@ const Autorisation = () => {
       <h2 className={styles.title}>login:</h2>
 
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <label>email</label>
+        {errors.email && <p>required field! Please type correct e-mail!</p>}
         <input
-          {...register("login", { required: true, pattern: /^[A-Za-z0-9]+$/i })}
-          className={styles.input}
-          maxLength="20"
-          type="text"
-          placeholder="login"
-        ></input>
-        <input
-          {...register("github")}
+          {...register("email", { required: true, defaultValue: "undefined" })}
           className={styles.input}
           maxLength="50"
           type="text"
-          placeholder="github"
+          placeholder="email@test.com"
         ></input>
+        {errors.password && <p>required password from 8 symbols!</p>}
+        <label>password</label>
         <input
           {...register("password", {
             required: true,
-            pattern: /^[A-Za-z0-9]+$/i,
+            minLength: 8,
           })}
           className={styles.input}
-          maxLength="30"
+          maxLength="50"
           type="password"
-          placeholder="password"
+          placeholder="min length 8 symbols"
         ></input>
-        <div className={styles.jobChecker}>
-          <h4>searching for job?</h4>
-          <input
-            {...register("job")}
-            name="jobNeed"
-            className={styles.checkbox}
-            type="checkbox"
-          ></input>
-        </div>
         <div className={styles.jobChecker}>
           <h4>remember me</h4>
           <input
@@ -65,7 +64,9 @@ const Autorisation = () => {
             type="checkbox"
           ></input>
         </div>
-        <button type="submit">send</button>
+        <button type="submit" disabled={!isValid}>
+          send
+        </button>
       </form>
     </div>
   );

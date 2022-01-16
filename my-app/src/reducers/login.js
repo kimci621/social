@@ -1,4 +1,4 @@
-import usersApi from "../api/api";
+import { authApi } from "../api/api";
 let initialState = {
   login: null,
 };
@@ -19,14 +19,46 @@ export const setUserLoginData = (payload) => {
   return { type: "SET-USER-LOGINDATA", payload: payload };
 };
 
+export const loginPostThunk = (email, password, rememberMe) => {
+  return (dispatch) => {
+    authApi.loginApi(email, password, rememberMe).then((res) => {
+      if (res.data.resultCode === 0) {
+        console.log("success auth");
+        authApi.getAuthStatus().then((res) => {
+          if (res) {
+            dispatch(setUserLoginData(res.login));
+          } else {
+            dispatch(setUserLoginData(null));
+          }
+        });
+      }
+    });
+  };
+};
+
 export const thunkLogin = () => {
   return (dispatch) => {
-    usersApi.getAuthStatus().then((res) => {
+    authApi.getAuthStatus().then((res) => {
       if (res) {
         dispatch(setUserLoginData(res.login));
-      }else{
-        dispatch(setUserLoginData("login"));
+      } else {
+        dispatch(setUserLoginData(null));
       }
+    });
+  };
+};
+
+export const thunkLogOut = () => {
+  return (dispatch) => {
+    authApi.logOutApi().then((res) => {
+      console.log('log out complete');
+      authApi.getAuthStatus().then((res) => {
+        if (res) {
+          dispatch(setUserLoginData(res.login));
+        } else {
+          dispatch(setUserLoginData(null));
+        }
+      });
     });
   };
 };

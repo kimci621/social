@@ -1,6 +1,13 @@
 import React from "react";
 import "./music.css";
-class CardProfile extends React.Component {
+import hoc from "../../hoc/hoc";
+import { connect } from "react-redux";
+const mapStateToProps = (state) => {
+  return {
+    login: state.loginReducer.login,
+  };
+};
+class Music extends React.Component {
   state = {
     index: 3,
     currentTime: "0:00",
@@ -254,4 +261,5 @@ class CardProfile extends React.Component {
   }
 }
 
-export default CardProfile;
+const CardProfile = hoc(Music);
+export default connect(mapStateToProps)(CardProfile);

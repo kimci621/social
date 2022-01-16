@@ -3,6 +3,27 @@ import logo from "../../assets/wars.svg";
 import { React } from "react";
 
 const Header = (props) => {
+  const LoginBtn = () => {
+    if (props.login === null) {
+      return (
+        <NavLink to="/login" className="header--leave-btn">
+          Log in
+        </NavLink>
+      );
+    } else {
+      return (
+        <button
+          onClick={() => {
+            props.thunkLogOut();
+          }}
+          className="headerBtn"
+          type="submit"
+        >
+          Log out
+        </button>
+      );
+    }
+  };
   return (
     <>
       <nav>
@@ -12,9 +33,7 @@ const Header = (props) => {
         <NavLink to="/" className="header--logo">
           <img src={logo} alt="logo" />
         </NavLink>
-        <NavLink to="/login" className="header--leave-btn">
-          {props.login ? props.login : "login"}
-        </NavLink>
+        <LoginBtn />
       </header>
     </>
   );

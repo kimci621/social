@@ -1,7 +1,17 @@
 import styles from "./Settings.module.css";
 import { Link } from "react-router-dom";
+import hoc from "../../hoc/hoc";
+import React from "react";
+import { connect } from "react-redux";
 
-const Settings = (props) => {
+const mapStateToProps = (state) => {
+  return {
+    login: state.loginReducer.login,
+  };
+};
+
+
+const SettingsPage = (props) => {
   return (
     <div className={styles.wrapper}>
       <nav>
@@ -13,4 +23,8 @@ const Settings = (props) => {
   );
 };
 
-export default Settings;
+const Settings = hoc(SettingsPage);
+
+export default connect(mapStateToProps)(Settings);
+
+
