@@ -59,4 +59,5 @@
   border: 1px solid #262626;
   box-shadow: 1px 1px 1px 1px #26262636;
   border-radius: 8px;
+  cursor: pointer;
 }

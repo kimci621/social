@@ -1,10 +1,11 @@
 import Aside from "./Aside";
 import { connect } from "react-redux";
 import { setUsers, thunkUsersUpdate } from "../../reducers/users";
+import { getFriendsData } from "../../selectors/selectors";
 const mapStateToProps = (state) => {
   return {
     state: state,
-    friendsData: state.usersReducer.friendsData,
+    friendsData: getFriendsData(state),
   };
 };
 

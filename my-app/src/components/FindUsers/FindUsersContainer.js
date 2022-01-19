@@ -1,24 +1,30 @@
 import FindUsers from "./FindUsers";
 import { connect } from "react-redux";
-import {
-  setUsers,
-  follow,
-  thunkUsersUpdate,
-} from "../../reducers/users";
+import { setUsers, follow, thunkUsersUpdate } from "../../reducers/users";
 import { editTotalPages, changeActivePage } from "../../reducers/pagination";
 import { isFetching } from "../../reducers/isFetching";
-import hoc from "../../hoc/hoc"
+import hoc from "../../hoc/hoc";
+import {
+  getNewFriends,
+  getActivePage,
+  getAllPages,
+  getIsFetchingStatus,
+  getUsersPerPage,
+  getAllUsersPerPage,
+  getIsDisabledStatus,
+  getLoginText,
+} from "../../selectors/selectors";
 
 const mapStateToProps = (state) => {
   return {
-    users: state.usersReducer.newFriends,
-    activePage: state.paginationReducer.activePage,
-    allPages: state.paginationReducer.allPages,
-    isFetchingState: state.isFetchingReducer.isFetching,
-    usersPerPage: state.usersReducer.usersPerPage,
-    allUsersPerPage: state.usersReducer.allUsersPerPage,
-    isDisabled: state.usersReducer.isDisabled,
-    login: state.loginReducer.login
+    users: getNewFriends(state),
+    activePage: getActivePage(state),
+    allPages: getAllPages(state),
+    isFetchingState: getIsFetchingStatus(state),
+    usersPerPage: getUsersPerPage(state),
+    allUsersPerPage: getAllUsersPerPage(state),
+    isDisabled: getIsDisabledStatus(state),
+    login: getLoginText(state),
   };
 };
 

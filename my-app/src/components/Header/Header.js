@@ -1,6 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/wars.svg";
-import { React } from "react";
 
 const Header = (props) => {
   const LoginBtn = () => {

@@ -6,8 +6,8 @@ export default class FindUser extends Component {
   componentDidMount() {
     this.props.isFetching(true);
     usersApi.getActivePage(this.props.activePage).then((res) => {
-      this.props.isFetching(false);
       this.props.editTotalPages(res.totalCount);
+      this.props.isFetching(false);
       this.props.setUsers(res.items);
     });
   }
@@ -21,8 +21,8 @@ export default class FindUser extends Component {
     this.props.isFetching(true);
     this.props.changeActivePage(currentPage);
     usersApi.getActivePage(currentPage).then((res) => {
-      this.props.isFetching(false);
       this.props.setUsers(res.items);
+      this.props.isFetching(false);
     });
   };
 

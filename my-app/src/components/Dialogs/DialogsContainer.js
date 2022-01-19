@@ -2,16 +2,16 @@ import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
 import { addMessageToState } from "../../reducers/dialogs";
 import { thunkProfile } from "../../reducers/updateProfile";
-import hoc from "../../hoc/hoc"
+import hoc from "../../hoc/hoc";
+import { getFriendsData, getLoginText, getProfile, getAvatar, getDialogData} from "../../selectors/selectors";
 
 const mapStateToProps = (state) => {
   return {
-    textFromState: state.dialogsReducer.textFromStateDialogs,
-    myProfile: state.profileUpdateReducer.myProfile,
-    MyAvatar: state.profileUpdateReducer.avatar,
-    dialogs: state.dialogsReducer.dialogData,
-    allFriends: state.usersReducer.friendsData,
-    login: state.loginReducer.login,
+    myProfile: getProfile(state),
+    MyAvatar: getAvatar(state),
+    dialogs: getDialogData(state),
+    allFriends: getFriendsData(state),
+    login: getLoginText(state),
   };
 };
 

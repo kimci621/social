@@ -36,22 +36,29 @@ export const loginPostThunk = (email, password, rememberMe) => {
   };
 };
 
-export const thunkLogin = () => {
+export const thunkLogin = (fn) => {
   return (dispatch) => {
-    authApi.getAuthStatus().then((res) => {
-      if (res) {
-        dispatch(setUserLoginData(res.login));
-      } else {
-        dispatch(setUserLoginData(null));
-      }
-    });
+    authApi
+      .getAuthStatus()
+      .then((res) => {
+        if (res) {
+          dispatch(setUserLoginData(res.login));
+        } else {
+          dispatch(setUserLoginData(null));
+        }
+      })
+      .then(() => {
+        if (fn && typeof fn === "function") {
+          fn();
+        }
+      });
   };
 };
 
 export const thunkLogOut = () => {
   return (dispatch) => {
     authApi.logOutApi().then((res) => {
-      console.log('log out complete');
+      console.log("log out complete");
       authApi.getAuthStatus().then((res) => {
         if (res) {
           dispatch(setUserLoginData(res.login));

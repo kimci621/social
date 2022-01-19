@@ -37,7 +37,7 @@ const Autorisation = (props) => {
         <label>email</label>
         {errors.email && <p>required field! Please type correct e-mail!</p>}
         <input
-          {...register("email", { required: true, defaultValue: "undefined" })}
+          {...register("email", { required: true})}
           className={styles.input}
           maxLength="50"
           type="text"
