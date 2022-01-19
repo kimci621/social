@@ -2,10 +2,10 @@ import { loginPostThunk, thunkLogin } from "../../reducers/login";
 import { connect } from "react-redux";
 import React from "react";
 import Autorisation from "./Autorisation";
-import { getLoginText } from "../../selectors/selectors";
+import { getLoginTextReSelect } from "../../selectors/selectors";
 const mapStateToProps = (state) => {
   return {
-    login: getLoginText(state),
+    login: getLoginTextReSelect(state),
   };
 };
 

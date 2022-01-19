@@ -50,7 +50,8 @@ const AsideFunc = (props) => {
           <NavLink to="/settings">Settings</NavLink>
         </li>
       </ul>
-      <FriendsAside />
+      
+      {props.login ? <FriendsAside /> : null}
     </div>
   );
 };

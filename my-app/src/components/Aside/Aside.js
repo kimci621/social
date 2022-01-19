@@ -9,6 +9,7 @@ class Aside extends React.Component {
     return (
       <AsideFunc
         friendsData={this.props.friendsData}
+        login={this.props.login}
       />
     );
   }

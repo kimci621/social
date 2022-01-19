@@ -5,26 +5,26 @@ import { editTotalPages, changeActivePage } from "../../reducers/pagination";
 import { isFetching } from "../../reducers/isFetching";
 import hoc from "../../hoc/hoc";
 import {
-  getNewFriends,
-  getActivePage,
-  getAllPages,
-  getIsFetchingStatus,
-  getUsersPerPage,
-  getAllUsersPerPage,
-  getIsDisabledStatus,
-  getLoginText,
+  getNewFriendsReSelect,
+  getActivePageReSelect,
+  getAllPagesReSelect,
+  getIsFetchingStatusReSelect,
+  getUsersPerPageReSelect,
+  getAllUsersPerPageReSelect,
+  getIsDisabledStatusReSelect,
+  getLoginTextReSelect,
 } from "../../selectors/selectors";
 
 const mapStateToProps = (state) => {
   return {
-    users: getNewFriends(state),
-    activePage: getActivePage(state),
-    allPages: getAllPages(state),
-    isFetchingState: getIsFetchingStatus(state),
-    usersPerPage: getUsersPerPage(state),
-    allUsersPerPage: getAllUsersPerPage(state),
-    isDisabled: getIsDisabledStatus(state),
-    login: getLoginText(state),
+    users: getNewFriendsReSelect(state),
+    activePage: getActivePageReSelect(state),
+    allPages: getAllPagesReSelect(state),
+    isFetchingState: getIsFetchingStatusReSelect(state),
+    usersPerPage: getUsersPerPageReSelect(state),
+    allUsersPerPage: getAllUsersPerPageReSelect(state),
+    isDisabled: getIsDisabledStatusReSelect(state),
+    login: getLoginTextReSelect(state),
   };
 };
 

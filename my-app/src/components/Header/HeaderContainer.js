@@ -4,7 +4,7 @@ import Header from "./Header";
 import { connect } from "react-redux";
 import { thunkLogin, thunkLogOut } from "../../reducers/login";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getLoginText } from "../../selectors/selectors";
+import { getLoginTextReSelect } from "../../selectors/selectors";
 
 function HeaderContainer(props) {
   const location = useLocation();
@@ -22,7 +22,7 @@ function HeaderContainer(props) {
 }
 
 const mapStateToProps = (state) => ({
-  login: getLoginText(state),
+  login: getLoginTextReSelect(state),
   state: state,
 });
 

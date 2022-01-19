@@ -9,18 +9,26 @@ import {
   setStatus,
   updateStatusOnPage,
 } from "../../reducers/updateProfile";
+import {
+  bgImageReSelect,
+  myPostsReSelect,
+  githubReSelect,
+  statusReSelect,
+  getLoginTextReSelect,
+  getProfileReSelect,
+  getAvatarReSelect,
+} from "../../selectors/selectors";
 
 const mapStateToProps = (state) => {
   return {
-    myPosts: state.postsReducer.myPosts,
-    textFromState: state.postsReducer.textFromState,
-    backgroundImage: state.profileUpdateReducer.bgImg,
+    myPosts: myPostsReSelect(state),
+    backgroundImage: bgImageReSelect(state),
     state: state,
-    myProfile: state.profileUpdateReducer.myProfile,
-    avatar: state.profileUpdateReducer.avatar,
-    github: state.profileUpdateReducer.github,
-    login: state.loginReducer.login,
-    status: state.profileUpdateReducer.status,
+    myProfile: getProfileReSelect(state),
+    avatar: getAvatarReSelect(state),
+    github: githubReSelect(state),
+    login: getLoginTextReSelect(state),
+    status: statusReSelect(state),
   };
 };
 
