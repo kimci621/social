@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
     login: state.loginReducer.login,
   };
 };
-class Music extends React.Component {
+class Music extends React.PureComponent {
   state = {
     index: 3,
     currentTime: "0:00",

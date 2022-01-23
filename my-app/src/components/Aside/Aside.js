@@ -1,18 +1,12 @@
 import AsideFunc from "./AsideFunc";
-import React from "react";
-class Aside extends React.Component {
-  componentDidMount() {
-    this.props.thunkUsersUpdate();
-  }
+import React, { memo, useEffect } from "react";
+const Aside = memo((props) => {
+  useEffect(() => {
+    props.thunkUsersUpdate();
+  }, []); //eslint-disable-line
 
-  render() {
-    return (
-      <AsideFunc
-        friendsData={this.props.friendsData}
-        login={this.props.login}
-      />
-    );
-  }
-}
+  console.log("render");
+  return <AsideFunc friendsData={props.friendsData} login={props.login} />;
+});
 
 export default Aside;

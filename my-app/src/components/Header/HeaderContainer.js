@@ -7,8 +7,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getLoginTextReSelect } from "../../selectors/selectors";
 
 function HeaderContainer(props) {
-  const location = useLocation();
-  let navigate = useNavigate();
+  let location = useLocation(),
+    navigate = useNavigate();
 
   useEffect(() => {
     props.thunkLogin();

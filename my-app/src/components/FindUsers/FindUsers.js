@@ -1,91 +1,82 @@
-import { React, Component } from "react";
+import React, { memo, useEffect } from "react";
 import FindUsersJsx from "./FindUsersFunc";
 import usersApi from "../../api/api";
 import loader from "../../assets/loader.svg";
-export default class FindUser extends Component {
-  componentDidMount() {
-    this.props.isFetching(true);
-    usersApi.getActivePage(this.props.activePage).then((res) => {
-      this.props.editTotalPages(res.totalCount);
-      this.props.isFetching(false);
-      this.props.setUsers(res.items);
+const FindUser = memo((props) => {
+  useEffect(() => {
+    props.isFetching(true);
+    usersApi.getActivePage(props.activePage).then((res) => {
+      props.editTotalPages(res.totalCount);
+      props.setUsers(res.items);
+      props.isFetching(false);
     });
-  }
-  componentDidUpdate() {
-    usersApi.getActivePage().then((res) => {
-      this.props.setUsers(res.items);
-    });
-  }
+  }, []);//eslint-disable-line
 
-  onPageChange = (currentPage) => {
-    this.props.isFetching(true);
-    this.props.changeActivePage(currentPage);
+  const onPageChange = (currentPage) => {
+    props.isFetching(true);
+    props.changeActivePage(currentPage);
     usersApi.getActivePage(currentPage).then((res) => {
-      this.props.setUsers(res.items);
-      this.props.isFetching(false);
+      props.setUsers(res.items);
+      props.isFetching(false);
     });
   };
 
-  moreUsers = (currentPage) => {
-    this.props.isFetching(true);
-    this.props.changeActivePage(currentPage);
+  const moreUsers = (currentPage) => {
+    props.isFetching(true);
+    props.changeActivePage(currentPage);
     usersApi
-      .getActivePage(this.props.activePage, this.props.allUsersPerPage)
+      .getActivePage(props.activePage, props.allUsersPerPage)
       .then((res) => {
-        this.props.setUsers(res.items);
-        this.props.isFetching(false);
+        props.setUsers(res.items);
+        props.isFetching(false);
       });
   };
 
-  deleteUser = (id) => {
-    this.props.isFetching(true);
+  const deleteUser = (id) => {
+    props.isFetching(true);
     usersApi.deleteUser(id);
-    this.onPageChange();
-    usersApi
-      .getActivePage(this.props.activePage, this.props.usersPerPage)
-      .then((res) => {
-        this.props.setUsers(res.items);
-        this.props.isFetching(false);
-      });
+    onPageChange();
+    usersApi.getActivePage(props.activePage, props.usersPerPage).then((res) => {
+      props.setUsers(res.items);
+      props.isFetching(false);
+    });
   };
 
-  addUser = (id) => {
-    this.props.isFetching(true);
+  const addUser = (id) => {
+    props.isFetching(true);
     usersApi.followUser(id);
-    this.onPageChange();
-    usersApi
-      .getActivePage(this.props.activePage, this.props.usersPerPage)
-      .then((res) => {
-        this.props.setUsers(res.items);
-        this.props.isFetching(false);
-      });
+    onPageChange();
+    usersApi.getActivePage(props.activePage, props.usersPerPage).then((res) => {
+      props.setUsers(res.items);
+      props.isFetching(false);
+    });
   };
 
-  render() {
-    let li = [];
-    for (let i = 1; i <= this.props.allPages / 1000; i++) {
-      li.push(i);
-    }
-    return (
-      <>
-        {this.props.isFetchingState ? (
-          <img src={loader} alt="spinner" className="loader"></img>
-        ) : null}
-        <FindUsersJsx
-          isFetchingState={this.props.isFetchingState}
-          loader={loader}
-          follow={this.props.follow}
-          users={this.props.users}
-          moreUsers={this.moreUsers}
-          li={li}
-          onPageChange={this.onPageChange}
-          activePage={this.props.activePage}
-          usersPerPage={this.props.usersPerPage}
-          isDisabled={this.props.isDisabled}
-          deleteUser={this.deleteUser}
-          addUser={this.addUser}
-        />
-      </>
-    );
+  let li = [];
+  for (let i = 1; i <= props.allPages / 1000; i++) {
+    li.push(i);
   }
-}
+  return (
+    <>
+      {props.isFetchingState ? (
+        <img src={loader} alt="spinner" className="loader"></img>
+      ) : null}
+      <FindUsersJsx
+        isFetchingState={props.isFetchingState}
+        loader={loader}
+        follow={props.follow}
+        users={props.users}
+        moreUsers={moreUsers}
+        li={li}
+        onPageChange={onPageChange}
+        activePage={props.activePage}
+        usersPerPage={props.usersPerPage}
+        isDisabled={props.isDisabled}
+        deleteUser={deleteUser}
+        addUser={addUser}
+      />
+    </>
+  );
+});
+
+export default FindUser;

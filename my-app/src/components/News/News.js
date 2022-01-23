@@ -1,7 +1,7 @@
 import styles from "./News.module.css";
 import { Link } from "react-router-dom";
 import hoc from "../../hoc/hoc";
-import React from "react";
+import React, { memo } from "react";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
@@ -9,19 +9,17 @@ const mapStateToProps = (state) => {
     login: state.loginReducer.login,
   };
 };
-class NewsPage extends React.Component {
-  render() {
-    return (
-      <div className={styles.wrapper}>
-        <nav>
-          <Link to="news"></Link>
-        </nav>
+const NewsPage = memo(() => {
+  return (
+    <div className={styles.wrapper}>
+      <nav>
+        <Link to="news"></Link>
+      </nav>
 
-        <h2 className={styles.title}>NEWS:</h2>
-      </div>
-    );
-  }
-}
+      <h2 className={styles.title}>NEWS:</h2>
+    </div>
+  );
+});
 
 const News = hoc(NewsPage);
 

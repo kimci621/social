@@ -1,21 +1,18 @@
 import DialogsFunc from "./DialogsFunc";
-import React from "react";
-class Dialogs extends React.Component {
-  componentDidMount() {
-    this.props.thunkProfile();
-  }
-  render() {
-    return (
-      <DialogsFunc
-        textFromState={this.props.textFromState}
-        addMessageToState={this.props.addMessageToState}
-        myProfile={this.props.myProfile}
-        dialogs={this.props.dialogs}
-        MyAvatar={this.props.MyAvatar}
-        allFriends={this.props.allFriends}
-      />
-    );
-  }
-}
+import React, { memo, useEffect } from "react";
+const Dialogs = memo((props) => {
+  useEffect(() => props.thunkProfile(), []); //eslint-disable-line
+
+  return (
+    <DialogsFunc
+      textFromState={props.textFromState}
+      addMessageToState={props.addMessageToState}
+      myProfile={props.myProfile}
+      dialogs={props.dialogs}
+      MyAvatar={props.MyAvatar}
+      allFriends={props.allFriends}
+    />
+  );
+});
 
 export default Dialogs;

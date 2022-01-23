@@ -1,23 +1,20 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { memo, useState } from "react";
 import { useForm } from "react-hook-form";
-class ProfileFunc extends React.Component {
-  state = {
-    btnStatus: true,
-  };
-  btnActivityOn = () => {
+const ProfileFunc = memo((props) => {
+  let [btnStatus, setBtnStatus] = useState(false);
+  const btnActivityOn = () => {
     setTimeout(() => {
-      this.setState({ btnStatus: true });
+      setBtnStatus(true);
     }, 1000);
   };
-  btnActivityOff = () => {
-    this.setState({ btnStatus: false });
+  const btnActivityOff = () => {
+    setBtnStatus(false);
   };
-  Form = () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+  const Form = () => {
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = (data) => {
-      this.props.addPostType({
+      props.addPostType({
         text: data.post,
         avatar:
           "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
@@ -45,7 +42,7 @@ class ProfileFunc extends React.Component {
     );
   };
   //inputApp start
-  Post = ({ avatarSrc, input, count }) => {
+  const Post = ({ avatarSrc, input, count }) => {
     //refactor !!
     let likeCounter = (e) => {
       e.preventDefault();
@@ -69,15 +66,15 @@ class ProfileFunc extends React.Component {
     );
   };
 
-  InputApp = () => {
+  const InputApp = () => {
     //All posts from state for export to Profile
     let posts;
-    if (!this.props.myPosts) {
+    if (!props.myPosts) {
       return null;
     } else {
-      posts = this.props.myPosts.map((post) => {
+      posts = props.myPosts.map((post) => {
         return (
-          <this.Post
+          <Post
             avatarSrc={post.avatar}
             input={post.postText}
             count={post.likesCount}
@@ -88,7 +85,7 @@ class ProfileFunc extends React.Component {
     return (
       <div className="content--main--posts">
         <div className="content--main--posts--tittle">My Posts</div>
-        <this.Form />
+        <Form />
         <div className="content--main--posts--old">{posts ? posts : null}</div>
       </div>
     );
@@ -96,17 +93,16 @@ class ProfileFunc extends React.Component {
   //inputApp end
 
   //background-image
-  ProfileBgApp = ({ imgSrc }) => {
+  const ProfileBgApp = ({ imgSrc }) => {
     return (
       <img className="content--main--img" src={imgSrc} alt="react-img"></img>
     );
   };
   //profile info-s
-  ProfileeInfo = ({ avatar, name, github, status, job }) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+  const ProfileeInfo = ({ avatar, name, github, status, job }) => {
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = (data) => {
-      this.props.setStatusToApi(data.status);
+      props.setStatusToApi(data.status);
       reset({ status: "" });
     };
     return (
@@ -132,10 +128,10 @@ class ProfileFunc extends React.Component {
             >
               <textarea
                 onBlur={() => {
-                  this.btnActivityOn();
+                  btnActivityOn();
                 }}
                 onFocus={() => {
-                  this.btnActivityOff();
+                  btnActivityOff();
                 }}
                 className="profileStatusEditArea"
                 placeholder="Type your new status"
@@ -145,7 +141,7 @@ class ProfileFunc extends React.Component {
               <button
                 className="profileStatusEditBtn"
                 type="submit"
-                disabled={this.state.btnStatus}
+                disabled={btnStatus}
               >
                 edit
               </button>
@@ -155,25 +151,23 @@ class ProfileFunc extends React.Component {
       </div>
     );
   };
-  render() {
-    return (
-      <div className="content--main">
-        <nav>
-          <Link to="profile"></Link>
-        </nav>
-        <this.ProfileBgApp imgSrc={this.props.backgroundImage} />
+  return (
+    <div className="content--main">
+      <nav>
+        <Link to="profile"></Link>
+      </nav>
+      <ProfileBgApp imgSrc={props.backgroundImage} />
 
-        <this.ProfileeInfo
-          name={this.props.myProfile.fullName}
-          job={this.props.myProfile.lookingForAJob}
-          status={this.props.statusState}
-          avatar={this.props.avatar}
-          github={this.props.github}
-        />
-        <this.InputApp />
-      </div>
-    );
-  }
-}
+      <ProfileeInfo
+        name={props.myProfile.fullName}
+        job={props.myProfile.lookingForAJob}
+        status={props.statusState}
+        avatar={props.avatar}
+        github={props.github}
+      />
+      <InputApp />
+    </div>
+  );
+});
 
 export default ProfileFunc;

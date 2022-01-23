@@ -2,7 +2,7 @@ import React from "react";
 import ProfileFunc from "./ProfileFunc";
 import loader from "../../assets/loader.svg";
 
-export default class Profile extends React.Component {
+export default class Profile extends React.PureComponent {
   state = {
     localStatus: "",
   };
