@@ -135,3 +135,11 @@ export const status = (state) => {
 export const statusReSelect = createSelector(status, (status) => {
   return status;
 });
+
+///---------------------------------------///
+export const userId = (state) => {
+  return state.profileUpdateReducer.userId;
+};
+export const userIdReSelect = createSelector(userId, (userId) => {
+  return userId;
+});

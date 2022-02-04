@@ -14,6 +14,7 @@ import {
   getIsDisabledStatusReSelect,
   getLoginTextReSelect,
 } from "../../selectors/selectors";
+import { setUserIdInProfilePage } from "../../reducers/updateProfile";
 
 const mapStateToProps = (state) => {
   return {
@@ -37,4 +38,5 @@ export default connect(mapStateToProps, {
   changeActivePage,
   isFetching,
   thunkUsersUpdate,
+  setUserIdInProfilePage
 })(usersHoc);

@@ -130,6 +130,7 @@
   height: 50px;
   margin: 20px auto;
   cursor: pointer;
+  margin-bottom: 50px;
 }
 
 .refreshBtn img:hover {
@@ -139,10 +140,11 @@
 .allPages {
   list-style: none;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 40px 20px 0;
-  padding: 0;
-  /* overflow-x: scroll; */
+  max-width: 380px;
+  padding: 10px;
+  overflow-x: hidden;
 }
 .allPages li {
   padding: 1px 8px;
@@ -163,4 +165,27 @@ h2 {
 
 .activePage {
   box-shadow: 5px -5px 2px 2px rgba(0, 0, 0, 0.6) !important;
+}
+
+.paginator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.paginationBtn {
+  margin-top: 40px;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #2626263b;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  box-shadow: 2px -2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.paginationBtn:hover {
+  box-shadow: 4px -4px 2px 2px rgba(0, 0, 0, 0.6) !important;
 }

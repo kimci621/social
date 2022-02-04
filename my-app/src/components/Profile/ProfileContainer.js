@@ -8,6 +8,8 @@ import {
   setStatusThunk,
   setStatus,
   updateStatusOnPage,
+  setUserIdInProfilePage,
+  thunkAvatarUpdate
 } from "../../reducers/updateProfile";
 import {
   bgImageReSelect,
@@ -17,6 +19,7 @@ import {
   getLoginTextReSelect,
   getProfileReSelect,
   getAvatarReSelect,
+  userIdReSelect
 } from "../../selectors/selectors";
 
 const mapStateToProps = (state) => {
@@ -29,6 +32,8 @@ const mapStateToProps = (state) => {
     github: githubReSelect(state),
     login: getLoginTextReSelect(state),
     status: statusReSelect(state),
+    userId: userIdReSelect(state),
+    savedOwnId: state.profileUpdateReducer.savedOwnId
   };
 };
 
@@ -41,4 +46,6 @@ export default connect(mapStateToProps, {
   addPostType,
   updateBgImg,
   setStatus,
+  setUserIdInProfilePage,
+  thunkAvatarUpdate
 })(hocProfile);

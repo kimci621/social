@@ -1,8 +1,10 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import FindUsersJsx from "./FindUsersFunc";
 import usersApi from "../../api/api";
 import loader from "../../assets/loader.svg";
 const FindUser = memo((props) => {
+  const [onPage, setOnPage] = useState(1);
+
   useEffect(() => {
     props.isFetching(true);
     usersApi.getActivePage(props.activePage).then((res) => {
@@ -10,7 +12,7 @@ const FindUser = memo((props) => {
       props.setUsers(res.items);
       props.isFetching(false);
     });
-  }, []);//eslint-disable-line
+  }, []); //eslint-disable-line
 
   const onPageChange = (currentPage) => {
     props.isFetching(true);
@@ -52,8 +54,9 @@ const FindUser = memo((props) => {
     });
   };
 
-  let li = [];
-  for (let i = 1; i <= props.allPages / 1000; i++) {
+  const li = [];
+  const allPages = Math.round(props.allPages / 100);
+  for (let i = onPage; i <= allPages; i++) {
     li.push(i);
   }
   return (
@@ -62,6 +65,7 @@ const FindUser = memo((props) => {
         <img src={loader} alt="spinner" className="loader"></img>
       ) : null}
       <FindUsersJsx
+        setUserIdInProfilePage={props.setUserIdInProfilePage}
         isFetchingState={props.isFetchingState}
         loader={loader}
         follow={props.follow}
@@ -74,6 +78,9 @@ const FindUser = memo((props) => {
         isDisabled={props.isDisabled}
         deleteUser={deleteUser}
         addUser={addUser}
+        setOnPage={setOnPage}
+        onPage={onPage}
+        allPages={allPages}
       />
     </>
   );

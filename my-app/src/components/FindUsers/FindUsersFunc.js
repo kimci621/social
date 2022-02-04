@@ -13,7 +13,7 @@ const FindUserJsx = (props) => {
     isDisabled,
   }) => {
     return (
-      <div className={styles.userWrapper} key={key}>
+      <div className={styles.userWrapper} key={key} onClick={()=>{props.setUserIdInProfilePage(id)}}>
         <div className={styles.leftUser}>
           <NavLink to={"/profile/" + id}>
             <img
@@ -71,6 +71,17 @@ const FindUserJsx = (props) => {
     });
   };
 
+  const nextFivePages = () => {
+    if (props.onPage >= 1 && props.onPage <= props.allPages - 5) {
+      props.setOnPage(props.onPage + 5);
+    }
+  };
+
+  const prevFivePages = () => {
+    if (props.onPage > 5) {
+      props.setOnPage(props.onPage - 5);
+    }
+  };
   return (
     <div className={styles.wrapper}>
       <h2>New Users</h2>
@@ -84,32 +95,36 @@ const FindUserJsx = (props) => {
       >
         more users
       </button>
-      <ul className={styles.allPages}>
-        {props.li.map((li) => {
-          if (li === props.activePage) {
-            return (
-              <li
-                className={styles.activePage}
-                onClick={() => {
-                  props.onPageChange(li);
-                }}
-              >
-                {li}
-              </li>
-            );
-          } else {
-            return (
-              <li
-                onClick={() => {
-                  props.onPageChange(li);
-                }}
-              >
-                {li}
-              </li>
-            );
-          }
-        })}
-      </ul>
+      <div className={styles.paginator}>
+        <button className={styles.paginationBtn} onClick={prevFivePages}>←</button>
+        <ul className={styles.allPages}>
+          {props.li.map((li) => {
+            if (li === props.activePage) {
+              return (
+                <li
+                  className={styles.activePage}
+                  onClick={() => {
+                    props.onPageChange(li);
+                  }}
+                >
+                  {li}
+                </li>
+              );
+            } else {
+              return (
+                <li
+                  onClick={() => {
+                    props.onPageChange(li);
+                  }}
+                >
+                  {li}
+                </li>
+              );
+            }
+          })}
+        </ul>
+        <button className={styles.paginationBtn} onClick={nextFivePages}>→</button>
+      </div>
       <div
         className={styles.refreshBtn}
         onClick={() => {
@@ -118,7 +133,6 @@ const FindUserJsx = (props) => {
       >
         <img src="./refresh-button.png" alt="refresh-button" />
       </div>
-      <h2>End</h2>
     </div>
   );
 };

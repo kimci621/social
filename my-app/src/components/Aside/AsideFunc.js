@@ -4,7 +4,13 @@ const AsideFunc = (props) => {
   //jsx for "friend" in aside bar
   const AddFriend = ({ avatar, name, id }) => {
     return (
-      <NavLink to={"/profile/" + name} className="content--aside--friends-item">
+      <NavLink
+        to={"/profile/" + name}
+        className="content--aside--friends-item"
+        onClick={() => {
+          props.setUserIdInProfilePage(id);
+        }}
+      >
         <img src={avatar} alt="friend img"></img>
         <div className="friends-name">{name}</div>
       </NavLink>
@@ -12,7 +18,7 @@ const AsideFunc = (props) => {
   };
   //AddFriend jsx for every "friend" from state
   const FriendsAside = () => {
-    let allFriendsJSX = props.friendsData.map((f) => { // eslint-disable-line
+    let allFriendsJSX = props.friendsData.map((f) => {// eslint-disable-line
       if (f) {
         return <AddFriend avatar={f.photo} name={f.name} id={f.id} />;
       }
@@ -30,27 +36,32 @@ const AsideFunc = (props) => {
     <div className="content--aside">
       <ul className="content--aside--nav">
         <li className="content--nav--item">
-          <NavLink to="/profile">Profile</NavLink>
+          <NavLink
+            onClick={() => {
+              props.setUserIdInProfilePage(props.savedOwnId);
+            }}
+            to="/profile"
+          >
+            Profile
+          </NavLink>
         </li>
         <li className="content--nav--item">
           <NavLink to="/messages">Messages</NavLink>
         </li>
         <li className="content--nav--item">
-          <NavLink to="/news">News</NavLink>
+          <NavLink to="/video">Video</NavLink>
         </li>
         <li className="content--nav--item">
           <NavLink to="/music">Music</NavLink>
         </li>
         <li className="content--nav--item">
-          <NavLink to="/users">
-            Users
-          </NavLink>
+          <NavLink to="/users">Users</NavLink>
         </li>
         <li className="content--nav--item">
           <NavLink to="/settings">Settings</NavLink>
         </li>
       </ul>
-      
+
       {props.login ? <FriendsAside /> : null}
     </div>
   );

@@ -23,7 +23,6 @@ export const loginPostThunk = (email, password, rememberMe) => {
   return (dispatch) => {
     authApi.loginApi(email, password, rememberMe).then((res) => {
       if (res.data.resultCode === 0) {
-        console.log("success auth");
         authApi.getAuthStatus().then((res) => {
           if (res) {
             dispatch(setUserLoginData(res.login));
@@ -36,29 +35,29 @@ export const loginPostThunk = (email, password, rememberMe) => {
   };
 };
 
-export const thunkLogin = (fn) => {
+export const getOwnId = () => {
+  return authApi.getAuthStatus().then((res) => {
+    if (res) {
+      return res;
+    }
+  });
+};
+
+export const thunkLogin = () => {
   return (dispatch) => {
-    authApi
-      .getAuthStatus()
-      .then((res) => {
-        if (res) {
-          dispatch(setUserLoginData(res.login));
-        } else {
-          dispatch(setUserLoginData(null));
-        }
-      })
-      .then(() => {
-        if (fn && typeof fn === "function") {
-          fn();
-        }
-      });
+    authApi.getAuthStatus().then((res) => {
+      if (res) {
+        dispatch(setUserLoginData(res.login));
+      } else {
+        dispatch(setUserLoginData(null));
+      }
+    });
   };
 };
 
 export const thunkLogOut = () => {
   return (dispatch) => {
     authApi.logOutApi().then((res) => {
-      console.log("log out complete");
       authApi.getAuthStatus().then((res) => {
         if (res) {
           dispatch(setUserLoginData(res.login));

@@ -1,20 +1,36 @@
 //libs
-import { Fragment } from "react";
+import React, { Fragment, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //Components
+// const OtherComponent = React.lazy(() => import('./OtherComponent'));
 import HeaderContainer from "../Header/HeaderContainer";
 import AsideContainer from "../Aside/AsideContainer";
-import ProfileContainer from "../Profile/ProfileContainer";
-import DialogsContainer from "../Dialogs/DialogsContainer";
-import News from "../News/News";
-import CardProfile from "../Music/Music";
-import Settings from "../Settings/Settings";
-import AuthContainer from "../Autorisation/AuthContainer";
 import Footer from "../Footer/Footer";
-import FindUsersContainer from "../FindUsers/FindUsersContainer";
 //css
 import "./App.css";
 import "../../css/my-fonts.css";
+//lazy
+const ProfileContainer = React.lazy(() =>
+  import("../Profile/ProfileContainer")
+);
+const DialogsContainer = React.lazy(() =>
+  import("../Dialogs/DialogsContainer")
+);
+const Video = React.lazy(() =>
+  import("../Video/Video")
+);
+const CardProfile = React.lazy(() =>
+  import("../Music/Music")
+);
+const Settings = React.lazy(() =>
+  import("../Settings/Settings")
+);
+const AuthContainer = React.lazy(() =>
+  import("../Autorisation/AuthContainer")
+);
+const FindUsersContainer = React.lazy(() =>
+  import("../FindUsers/FindUsersContainer")
+);
 
 function App() {
   return (
@@ -25,14 +41,22 @@ function App() {
           <div className="content">
             <AsideContainer />
             <Routes>
-              <Route path="/" element={<News />} />
-              <Route path="/profile/*" element={<ProfileContainer />} />
-              <Route path="/messages/*" element={<DialogsContainer />} />
-              <Route path="/news/*" element={<News />} />
-              <Route path="/music/*" element={<CardProfile />} />
-              <Route path="/settings/*" element={<Settings />} />
-              <Route path="/login/*" element={<AuthContainer />} />
-              <Route path="/users/*" element={<FindUsersContainer />} />
+              <Route path="/" element={
+              <Suspense fallback={<div>Загрузка...</div>}><ProfileContainer /></Suspense>}/>
+              <Route path="/profile/*" element={
+              <Suspense fallback={<div>Загрузка...</div>}><ProfileContainer /></Suspense>}/>
+              <Route path="/messages/*" element={
+              <Suspense fallback={<div>Загрузка...</div>}><DialogsContainer /></Suspense>}/>
+              <Route path="/video/*" element={
+              <Suspense fallback={<div>Загрузка...</div>}><Video /></Suspense>}/>
+              <Route path="/music/*" element={
+              <Suspense fallback={<div>Загрузка...</div>}><CardProfile /></Suspense>}/>
+              <Route path="/settings/*" element={
+              <Suspense fallback={<div>Загрузка...</div>}><Settings /></Suspense>}/>
+              <Route path="/login/*" element={
+              <Suspense fallback={<div>Загрузка...</div>}><AuthContainer /></Suspense>}/>
+              <Route path="/users/*" element={
+              <Suspense fallback={<div>Загрузка...</div>}><FindUsersContainer /></Suspense>}/>
             </Routes>
           </div>
         </div>

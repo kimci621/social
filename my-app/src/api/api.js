@@ -29,7 +29,7 @@ const usersApi = {
       return res.data;
     });
   },
-  getSelfAccount: (userId = myUserId) => {
+  getSelfAccount: (userId) => {
     return instance.get(`profile/${userId}`).then((res) => {
       return res.data;
     });
@@ -74,4 +74,13 @@ export const authApi = {
   },
 };
 
+export const putImageApi = {
+  putNewImage: (data) => {
+    const formData = new FormData();
+    formData.append("image", data);
+    return instance.put("profile/photo", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+};
 export default usersApi;
