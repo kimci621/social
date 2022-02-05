@@ -60,11 +60,12 @@ export const authApi = {
       }
     });
   },
-  loginApi: (email, password, rememberMe = true) => {
+  loginApi: (email, password, rememberMe = true, captcha) => {
     return instance.post("auth/login", {
       email: email,
       password: password,
       remember: rememberMe,
+      captcha: captcha
     });
   },
   logOutApi: () => {
@@ -101,6 +102,12 @@ export const putMainInfoInProfile = {
       },
     };
     return instance.put("profile", { ...data });
+  },
+};
+
+export const securityCaptchaApi = {
+  getCaptchaUrl: () => {
+    return instance.get("security/get-captcha-url");
   },
 };
 export default usersApi;

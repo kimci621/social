@@ -2,7 +2,17 @@ import styles from "./Autorisation.module.css";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 const Autorisation = (props) => {
+  let [capthcaStatus, setCaptchaStatus] = useState(false);
+
+  useEffect(() => {
+    if (props.captcha) {
+      console.log(props.captcha);
+      setCaptchaStatus(true);
+    }
+  }, [props.captcha]);
+
   const {
     register,
     handleSubmit,
@@ -11,7 +21,12 @@ const Autorisation = (props) => {
   } = useForm({ mode: "onBlur" });
   // "kimciwork@gmail.com", "k5uHUcEagwv_ieV"
   const onSubmit = (data) => {
-    props.loginPostThunk(data.email, data.password, data.remember);
+    props.loginPostThunk(
+      data.email,
+      data.password,
+      data.remember,
+      data.captcha
+    );
     reset({
       login: "",
       github: "",
@@ -20,7 +35,28 @@ const Autorisation = (props) => {
       remember: "",
     });
   };
-  
+
+  const CaptchaCase = () => {
+    if (capthcaStatus === true) {
+      return (
+        <div>
+          <img src={props.captcha} alt="captcha"></img>
+          <p></p>
+          <input
+            type="text"
+            name="captcha"
+            placeholder="Please type captcha here:"
+            {...register("captcha", {
+              required: true,
+            })}
+          ></input>
+        </div>
+      );
+    } else {
+      return <></>;
+    }
+  };
+
   if (props.login != null) {
     return <Navigate to="/profile"></Navigate>;
   }
@@ -35,15 +71,26 @@ const Autorisation = (props) => {
 
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <label>email</label>
-        {errors.email && <p>required field! Please type correct e-mail!</p>}
+        {errors.email && (
+          <span className="errorSpan">
+            required field! Entered value does not match email format.!
+          </span>
+        )}
         <input
-          {...register("email", { required: true})}
+          {...register("email", {
+            required: true,
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+            },
+          })}
           className={styles.input}
           maxLength="50"
           type="text"
           placeholder="email@test.com"
         ></input>
-        {errors.password && <p>required password from 8 symbols!</p>}
+        {errors.password && (
+          <span className="errorSpan">required password from 8 symbols!</span>
+        )}
         <label>password</label>
         <input
           {...register("password", {
@@ -64,7 +111,9 @@ const Autorisation = (props) => {
             type="checkbox"
           ></input>
         </div>
-        <button type="submit" disabled={!isValid}>
+        <CaptchaCase register={register} />
+
+        <button type="submit" disabled={!isValid} onClick={() =>{props.thunkProfile(props.savedOwnId)}}>
           send
         </button>
       </form>

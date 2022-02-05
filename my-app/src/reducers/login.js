@@ -1,6 +1,7 @@
-import { authApi } from "../api/api";
+import { authApi, securityCaptchaApi } from "../api/api";
 let initialState = {
   login: null,
+  captchaUrl: "",
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -9,6 +10,10 @@ const loginReducer = (state = initialState, action) => {
     case "SET-USER-LOGINDATA":
       newState.login = { ...state.login };
       newState.login = action.payload;
+      return newState;
+    case "SET-CAPTCHA-URL":
+      newState.captchaUrl = { ...state.captchaUrl };
+      newState.captchaUrl = action.payload;
       return newState;
     default:
       return { ...state };
@@ -19,9 +24,16 @@ export const setUserLoginData = (payload) => {
   return { type: "SET-USER-LOGINDATA", payload: payload };
 };
 
-export const loginPostThunk = (email, password, rememberMe) => {
+export const setCaptchaUrl = (payload) => {
+  return { type: "SET-CAPTCHA-URL", payload: payload };
+};
+
+
+
+
+export const loginPostThunk = (email, password, rememberMe, captcha) => {
   return (dispatch) => {
-    authApi.loginApi(email, password, rememberMe).then((res) => {
+    authApi.loginApi(email, password, rememberMe, captcha).then((res) => {
       if (res.data.resultCode === 0) {
         authApi.getAuthStatus().then((res) => {
           if (res) {
@@ -29,6 +41,12 @@ export const loginPostThunk = (email, password, rememberMe) => {
           } else {
             dispatch(setUserLoginData(null));
           }
+        });
+      } else if (res.data.resultCode === 10) {
+        securityCaptchaApi.getCaptchaUrl().then((res) => {
+          dispatch(setCaptchaUrl(res.data.url));
+          console.log(res.data)
+          return res.data.url;
         });
       }
     });

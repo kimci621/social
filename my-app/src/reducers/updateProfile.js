@@ -107,7 +107,6 @@ export const updateStatusOnPage = (userId) => {
     });
   };
 };
-
 export const setStatusThunk = (payload) => {
   return (dispatch) => {
     usersApi.updateStatus(payload).then((res) => {
@@ -117,7 +116,6 @@ export const setStatusThunk = (payload) => {
     });
   };
 };
-
 export const thunkAvatarUpdate = (payload, userId) => {
   return (dispatch) => {
     putImageApi.putNewImage(payload).then(() => {

@@ -2,22 +2,12 @@ import { Link } from "react-router-dom";
 import React, { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import Spinner from "../../assets/spinner";
-//Надо переобдумать использование useForm тк сейчас нееобходимо собирать с основных полей вместо статуса
-//статус можно переделать в localstate и ref, далее отправлять по ref.current.value т.к нет валидаций на статусе
 
 const ProfileFunc = memo((props) => {
-  let [btnStatus, setBtnStatus] = useState(false);
   let [inputImageActive, setInputImageActive] = useState(false);
   let [eventTarget, setEventTarget] = useState({});
   let [pendingStatus, setPendingStatus] = useState(false);
-  const btnActivityOn = () => {
-    setTimeout(() => {
-      setBtnStatus(true);
-    }, 1000);
-  };
-  const btnActivityOff = () => {
-    setBtnStatus(false);
-  };
+  let [avatarBtnStatus, setAvatarBtnStatus] = useState(true);
   const StatusForm = () => {
     // const { register, handleSubmit, reset } = useForm();
     // const onSubmit = (data) => {
@@ -111,6 +101,7 @@ const ProfileFunc = memo((props) => {
     // saving input image to local state
     e.preventDefault();
     setEventTarget((eventTarget.image = { image: e.target.files[0] }));
+    setAvatarBtnStatus(false);
   };
   const InputFileForm = () => {
     //file input for new avatar
@@ -134,10 +125,12 @@ const ProfileFunc = memo((props) => {
             <input type="file" onChange={onChangeInputImg} id={"fileImg"} />
             {eventTarget.image
               ? `${eventTarget.image.name}`
-              : "Нажмите чтобы загрузить"}
+              : "Press and select new image"}
           </label>
           <div>
-            <button type="submit">отправить</button>
+            <button type="submit" disabled={avatarBtnStatus}>
+              update
+            </button>
             <button
               type="button"
               onClick={(e) => {
@@ -145,7 +138,7 @@ const ProfileFunc = memo((props) => {
                 setInputImageActive(false);
               }}
             >
-              назад
+              back
             </button>
           </div>
         </form>
@@ -158,7 +151,7 @@ const ProfileFunc = memo((props) => {
             setInputImageActive(true);
           }}
         >
-          изменить
+          Update profile
         </button>
       );
     }
@@ -187,11 +180,18 @@ const ProfileFunc = memo((props) => {
     newDataFromProfileWindowToApi,
     userId,
   }) => {
-    const { register, handleSubmit, reset } = useForm();
+    const {
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors, isDirty, isValid },
+    } = useForm({ mode: "onBlur" });
     const onSubmit = (data) => {
       newDataFromProfileWindowToApi(data, userId);
       reset({ fullName: "", github: "", lookingForAJob: null });
-      setTimeout(() =>{ setInputImageActive(false) }, 1000)
+      setTimeout(() => {
+        setInputImageActive(false);
+      }, 1000);
     };
     if (inputImageActive === false) {
       return (
@@ -217,62 +217,77 @@ const ProfileFunc = memo((props) => {
             value={userId}
             {...register("userId")}
           ></input>
+          {errors.fullName && (
+            <span className="errorSpan">
+              Type more than 2 symbols! Field is required.
+            </span>
+          )}
           <input
+            maxLength="30"
             className="content--main--user--info--form--item"
             placeholder={`name: ${name}`}
             name="fullName"
-            {...register("fullName")}
+            {...register("fullName", {
+              required: true,
+              minLength: 2,
+              maxLength: 30,
+            })}
           ></input>
+          {errors.github && (
+            <span className="errorSpan">
+              Type more than 3 symbols! Field is required.
+            </span>
+          )}
           <input
             className="content--main--user--info--form--item"
             placeholder={`github: ${github ? github : "no link :c"}`}
             name="github"
-            {...register("github")}
+            {...register("github", {
+              required: true,
+              minLength: 3,
+            })}
           ></input>
           <div className="jobNeedEditMode">
             need job?
             <select
               name="selectEditMode"
               className="content--main--user--info--form--item"
-              {...register("lookingForAJob")}
+              {...register("lookingForAJob", { required: true })}
             >
               <option value={true}>yes</option>
               <option value={false}>no</option>
             </select>
+            {errors.lookingForAJob && (
+              <span className="errorSpan">Field is required.</span>
+            )}
           </div>
-          <button type="submit">отправить</button>
+          <button type="submit" disabled={!isDirty || !isValid}>
+            update
+          </button>
         </form>
       );
     }
   };
-  const StatusTexteditArea = ({
-    btnActivityOn,
-    btnActivityOff,
-    register,
-    btnStatus,
-  }) => {
+  const StatusTexteditArea = ({ register, errors, isDirty, isValid }) => {
     if (inputImageActive === true) {
       return (
         <>
           <textarea
-            onBlur={() => {
-              btnActivityOn();
-            }}
-            onFocus={() => {
-              btnActivityOff();
-            }}
             className="profileStatusEditArea"
             placeholder="Type your new status"
-            {...register("status")}
+            {...register("status", { required: true, minLength: 1 })}
             maxLength="300"
           ></textarea>
           <button
             className="profileStatusEditBtn"
             type="submit"
-            disabled={btnStatus}
+            disabled={!isDirty || !isValid}
           >
             edit
           </button>
+          {errors.status && (
+            <span className="errorSpan">Type something to update status!</span>
+          )}
         </>
       );
     } else {
@@ -282,7 +297,12 @@ const ProfileFunc = memo((props) => {
   //profile info-s
   const ProfileeInfo = ({ avatar, name, github, status, job }) => {
     // profile box jsx
-    const { register, handleSubmit, reset } = useForm();
+    const {
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors, isDirty, isValid },
+    } = useForm({ mode: "onBlur" });
     const onSubmit = (data) => {
       props.setStatusToApi(data.status);
       reset({ status: "" });
@@ -305,10 +325,10 @@ const ProfileFunc = memo((props) => {
               onSubmit={handleSubmit(onSubmit)}
             >
               <StatusTexteditArea
-                btnActivityOn={btnActivityOn}
-                btnActivityOff={btnActivityOff}
                 register={register}
-                btnStatus={btnStatus}
+                errors={errors}
+                isDirty={isDirty}
+                isValid={isValid}
               />
             </form>
           </div>

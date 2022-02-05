@@ -20,8 +20,10 @@ function HeaderContainer(props) {
 
   useEffect(() => {
     getOwnId().then((res) => {
-      props.setUserIdInProfilePage(res.id);
-      props.saveOwnId(res.id);
+      if (res) {
+        props.setUserIdInProfilePage(res.id);
+        props.saveOwnId(res.id);
+      }
     }); // set own user to render profile page
 
     props.thunkLogin();
@@ -57,5 +59,5 @@ export default connect(mapStateToProps, {
   thunkLogOut,
   isFetching,
   setUserIdInProfilePage,
-  saveOwnId
+  saveOwnId,
 })(HeaderContainer);
