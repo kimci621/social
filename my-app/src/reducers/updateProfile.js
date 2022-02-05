@@ -1,5 +1,5 @@
 import usersApi from "../api/api";
-import { putImageApi } from "../api/api";
+import { putImageApi, putMainInfoInProfile } from "../api/api";
 
 let initialState = {
   myProfile: {},
@@ -84,7 +84,7 @@ export const updateGithub = (payload) => {
 export const setStatus = (payload) => {
   return { type: "SET_STATUS", payload: payload };
 };
-
+//redux-thunks, api from api.js
 export const thunkProfile = (userId) => {
   return (dispatch) => {
     usersApi.getSelfAccount(userId).then((res) => {
@@ -120,12 +120,22 @@ export const setStatusThunk = (payload) => {
 
 export const thunkAvatarUpdate = (payload, userId) => {
   return (dispatch) => {
-    putImageApi.putNewImage(payload).then(() =>{
+    putImageApi.putNewImage(payload).then(() => {
       usersApi.getSelfAccount(userId).then((res) => {
         dispatch(updateAvatar(res.photos.large));
       });
     });
-    
+  };
+};
+export const profileInfoMoveToApi = (payload, userId) => {
+  return (dispatch) => {
+    putMainInfoInProfile.putPayloadToApi(payload).then((res) => {
+      if (res.data.resultCode === 0) {
+        usersApi.getSelfAccount(userId).then((res) => {
+          dispatch(updateProfile(res));
+        });
+      }
+    });
   };
 };
 

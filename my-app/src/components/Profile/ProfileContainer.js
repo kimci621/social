@@ -9,7 +9,8 @@ import {
   setStatus,
   updateStatusOnPage,
   setUserIdInProfilePage,
-  thunkAvatarUpdate
+  thunkAvatarUpdate,
+  profileInfoMoveToApi
 } from "../../reducers/updateProfile";
 import {
   bgImageReSelect,
@@ -47,5 +48,6 @@ export default connect(mapStateToProps, {
   updateBgImg,
   setStatus,
   setUserIdInProfilePage,
-  thunkAvatarUpdate
+  thunkAvatarUpdate,
+  profileInfoMoveToApi
 })(hocProfile);

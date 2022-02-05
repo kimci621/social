@@ -75,6 +75,9 @@ const Profile = (props) => {
       //put avatar
       thunkAvatarUpdate={props.thunkAvatarUpdate}
       savedOwnId={props.savedOwnId}
+      // edit mainInfo in Profile 
+      profileInfoMoveToApi={props.profileInfoMoveToApi}
+      userId={props.savedOwnId}
     />
   );
 };

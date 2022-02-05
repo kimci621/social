@@ -15,8 +15,6 @@ const instance = axios.create({
   },
 });
 
-const myUserId = "21352";
-
 const usersApi = {
   changeAvatar: (url) => {
     return instance.put("profile/photo", { image: url });
@@ -49,7 +47,7 @@ const usersApi = {
       status: payload,
     });
   },
-  getStatus: (userId = myUserId) => {
+  getStatus: (userId) => {
     return instance.get(`profile/status/${userId}`);
   },
 };
@@ -81,6 +79,28 @@ export const putImageApi = {
     return instance.put("profile/photo", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
+  },
+};
+
+export const putMainInfoInProfile = {
+  putPayloadToApi: (payload) => {
+    const [userId, lookingForAJob, fullName, github] = [
+      payload.userId,
+      payload.lookingForAJob,
+      payload.fullName,
+      payload.github,
+    ];
+    const data = {
+      userId: userId,
+      lookingForAJob: lookingForAJob,
+      lookingForAJobDescription: "none",
+      fullName: fullName,
+      AboutMe: "something about me",
+      contacts: {
+        github: github,
+      },
+    };
+    return instance.put("profile", { ...data });
   },
 };
 export default usersApi;

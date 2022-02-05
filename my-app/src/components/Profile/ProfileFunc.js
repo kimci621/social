@@ -18,26 +18,31 @@ const ProfileFunc = memo((props) => {
   const btnActivityOff = () => {
     setBtnStatus(false);
   };
-  const Form = () => {
-    const { register, handleSubmit, reset } = useForm();
-    const onSubmit = (data) => {
-      props.addPostType({
-        text: data.post,
-        avatar:
-          "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
-      });
-      reset({ post: "" });
-    };
+  const StatusForm = () => {
+    // const { register, handleSubmit, reset } = useForm();
+    // const onSubmit = (data) => {
+    //   props.addPostType({
+    //     text: data.post,
+    //     avatar:
+    //       "https://pbs.twimg.com/profile_images/794107415876747264/g5fWe6Oh.jpg",
+    //   });
+    //   reset({ post: "" });
+    // };
+    // in form onSubmit={handleSubmit(onSubmit)}
     return (
       <form
         className="content--main--posts--add"
-        onSubmit={handleSubmit(onSubmit)}
+        // onSubmit={handleSubmit(onSubmit)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log("submit");
+        }}
       >
         <input
           autoFocus={false}
           key="addPost"
           name="addPost"
-          {...register("post", { required: true, pattern: /^[A-Za-z0-9]+$/i })}
+          // {...register("post", { required: true, pattern: /^[A-Za-z0-9]+$/i })}
           className="content--main--posts--input"
           placeholder="your news..."
           type="text"
@@ -48,7 +53,6 @@ const ProfileFunc = memo((props) => {
       </form>
     );
   };
-  //inputApp start
   const Post = ({ avatarSrc, input, count }) => {
     //refactor !!
     let likeCounter = (e) => {
@@ -72,7 +76,6 @@ const ProfileFunc = memo((props) => {
       </div>
     );
   };
-
   const InputApp = () => {
     //All posts from state for export to Profile
     let posts;
@@ -92,13 +95,11 @@ const ProfileFunc = memo((props) => {
     return (
       <div className="content--main--posts">
         <div className="content--main--posts--tittle">My Posts</div>
-        <Form />
+        <StatusForm />
         <div className="content--main--posts--old">{posts ? posts : null}</div>
       </div>
     );
   };
-  //inputApp end
-
   //background-image
   const ProfileBgApp = ({ imgSrc }) => {
     // background-image jsx
@@ -179,8 +180,19 @@ const ProfileFunc = memo((props) => {
       );
     }
   };
- 
-  const MainInfoInProfileWindow = ({ name, job, github }) => {
+  const MainInfoInProfileWindow = ({
+    name,
+    job,
+    github,
+    newDataFromProfileWindowToApi,
+    userId,
+  }) => {
+    const { register, handleSubmit, reset } = useForm();
+    const onSubmit = (data) => {
+      newDataFromProfileWindowToApi(data, userId);
+      reset({ fullName: "", github: "", lookingForAJob: null });
+      setTimeout(() =>{ setInputImageActive(false) }, 1000)
+    };
     if (inputImageActive === false) {
       return (
         <>
@@ -195,28 +207,40 @@ const ProfileFunc = memo((props) => {
       );
     } else {
       return (
-        <form className="content--main--user--info--form">
+        <form
+          className="content--main--user--info--form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <input
+            className="hidden"
+            name="id"
+            value={userId}
+            {...register("userId")}
+          ></input>
           <input
             className="content--main--user--info--form--item"
             placeholder={`name: ${name}`}
+            name="fullName"
+            {...register("fullName")}
           ></input>
           <input
             className="content--main--user--info--form--item"
             placeholder={`github: ${github ? github : "no link :c"}`}
+            name="github"
+            {...register("github")}
           ></input>
           <div className="jobNeedEditMode">
             need job?
             <select
               name="selectEditMode"
               className="content--main--user--info--form--item"
+              {...register("lookingForAJob")}
             >
-              <option value="yes">yes</option>
-              <option value="no">no</option>
+              <option value={true}>yes</option>
+              <option value={false}>no</option>
             </select>
           </div>
-          <button type="submit" onClick={(e)=>{e.preventDefault();}}>
-            отправить
-          </button>
+          <button type="submit">отправить</button>
         </form>
       );
     }
@@ -255,7 +279,6 @@ const ProfileFunc = memo((props) => {
       return <></>;
     }
   };
-
   //profile info-s
   const ProfileeInfo = ({ avatar, name, github, status, job }) => {
     // profile box jsx
@@ -268,7 +291,13 @@ const ProfileFunc = memo((props) => {
       <div className="content--main--user">
         <PendingStatusAvatarHere avatar={avatar} />
         <div className="content--main--user--info">
-          <MainInfoInProfileWindow name={name} job={job} github={github} />
+          <MainInfoInProfileWindow
+            name={name}
+            job={job}
+            github={github}
+            newDataFromProfileWindowToApi={props.profileInfoMoveToApi}
+            userId={props.userId}
+          />
           <div className="content--main--user--info--about">
             Status: <p>{status}</p>
             <form
