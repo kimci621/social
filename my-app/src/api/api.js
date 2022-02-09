@@ -16,75 +16,75 @@ const instance = axios.create({
 });
 
 const usersApi = {
-  changeAvatar: (url) => {
-    return instance.put("profile/photo", { image: url });
+  changeAvatar: async (url) => {
+    return await instance.put("profile/photo", { image: url });
   },
-  deleteUser: (id) => {
-    return instance.delete(`follow/${id}`, {});
+  deleteUser: async (id) => {
+    return await instance.delete(`follow/${id}`, {});
   },
-  getUsers: () => {
-    return instance.get(`users`, {}).then((res) => {
+  getUsers: async () => {
+    return await instance.get(`users`, {}).then((res) => {
       return res.data;
     });
   },
-  getSelfAccount: (userId) => {
-    return instance.get(`profile/${userId}`).then((res) => {
+  getSelfAccount: async (userId) => {
+    return await instance.get(`profile/${userId}`).then((res) => {
       return res.data;
     });
   },
-  getActivePage: (activePage, count) => {
-    return instance
+  getActivePage: async (activePage, count) => {
+    return await instance
       .get(`users?page=${activePage}&count=${count}`)
       .then((res) => {
         return res.data;
       });
   },
-  followUser: (id) => {
-    return instance.post(`follow/${id}`, {});
+  followUser: async (id) => {
+    return await instance.post(`follow/${id}`, {});
   },
-  updateStatus: (payload) => {
-    return instance.put("profile/status", {
+  updateStatus: async (payload) => {
+    return await instance.put("profile/status", {
       status: payload,
     });
   },
-  getStatus: (userId) => {
-    return instance.get(`profile/status/${userId}`);
+  getStatus: async (userId) => {
+    return await instance.get(`profile/status/${userId}`);
   },
 };
 
 export const authApi = {
-  getAuthStatus: () => {
-    return instance.get("auth/me").then((res) => {
+  getAuthStatus: async () => {
+    return await instance.get("auth/me").then((res) => {
       if (res.data.resultCode === 0) {
         return res.data.data;
       }
     });
   },
-  loginApi: (email, password, rememberMe = true, captcha) => {
+  loginApi: async (email, password, rememberMe = true, captcha) => {
     return instance.post("auth/login", {
       email: email,
       password: password,
       remember: rememberMe,
-      captcha: captcha
+      captcha: captcha,
     });
   },
-  logOutApi: () => {
-    return instance.delete("auth/login");
+  logOutApi: async () => {
+    return await instance.delete("auth/login");
   },
 };
 
 export const putImageApi = {
-  putNewImage: (data) => {
+  putNewImage: async (data) => {
     const formData = new FormData();
     formData.append("image", data);
-    return instance.put("profile/photo", formData, {
+    return await instance.put("profile/photo", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   },
 };
 
 export const putMainInfoInProfile = {
-  putPayloadToApi: (payload) => {
+  putPayloadToApi: async (payload) => {
     const [userId, lookingForAJob, fullName, github] = [
       payload.userId,
       payload.lookingForAJob,
@@ -101,13 +101,13 @@ export const putMainInfoInProfile = {
         github: github,
       },
     };
-    return instance.put("profile", { ...data });
+    return await instance.put("profile", { ...data });
   },
 };
 
 export const securityCaptchaApi = {
-  getCaptchaUrl: () => {
-    return instance.get("security/get-captcha-url");
+  getCaptchaUrl: async () => {
+    return await instance.get("security/get-captcha-url");
   },
 };
 export default usersApi;
