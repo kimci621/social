@@ -1,27 +1,48 @@
 import styles from "./Video.module.css";
-import { Link } from "react-router-dom";
-import hoc from "../../hoc/hoc";
 import React, { memo, useState } from "react";
-import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-const mapStateToProps = (state) => {
-  return {
-    login: state.loginReducer.login,
-  };
-};
-const VideoPage = memo(() => {
+const VideoPage = memo((props) => {
   let [disablePopupStatus, setDisablePopupStatus] = useState(false);
   let [popupContent, setPopupContent] = useState("");
-  const url = "https://cloud.cdnland.in/movies/eb8e1596c558641550568c18c99c7f45a260f082/c9012bdd92cf2c50fdb85798d3120e3e:2022020119/720.mp4";
 
-  const sendKey = (e) => {
-    setPopupContent(e.target.id);
+  const VideoPlayer = () => {
+    return (
+      <iframe
+        width="100%"
+        height="100%"
+        src={`https://www.youtube.com/embed/${popupContent}`}
+        frameborder="0"
+        allowfullscreen={true}
+        title="title"
+      ></iframe>
+    );
   };
 
-  const VideoPlayer = (src) => {
+  const MovieItem = (videoSrc) => {
     return (
-      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/g221Hvhv4Uo" frameborder="0" allowfullscreen title="title"></iframe>
+      <img
+        key={videoSrc.videoSrc}
+        className={styles.videoItem}
+        onClick={(e) => {
+          e.preventDefault();
+          setPopupContent(videoSrc.videoSrc);
+          setDisablePopupStatus(true);
+        }}
+        src={videoSrc.imgSrc}
+        alt="asd"
+      ></img>
     );
+  };
+
+  const AllMovies = () => {
+    return props.movies.map((item) => {
+      if (item) {
+        return <MovieItem videoSrc={item.video} imgSrc={item.image} />;
+      } else {
+        return <></>;
+      }
+    });
   };
   return (
     <div className={styles.wrapper}>
@@ -31,43 +52,17 @@ const VideoPage = memo(() => {
       <div className={disablePopupStatus ? styles.popupVideo : styles.disabled}>
         <div
           className={styles.closeBtn}
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             setDisablePopupStatus(false);
           }}
         ></div>
-        <VideoPlayer src={url}/>
-        {popupContent ? popupContent : <></>}
+        <VideoPlayer url={popupContent ? popupContent : ""} />
       </div>
       <div className={styles.videoTeka}>
-        <div
-          className={styles.videoItem}
-          id="firstEpisode"
-          onClick={(e) => {
-            setDisablePopupStatus(true);
-            sendKey(e);
-          }}
-        ></div>
-        <div
-          className={styles.videoItem}
-          id="secondEpisode"
-          onClick={(e) => {
-            setDisablePopupStatus(true);
-            sendKey(e);
-          }}
-        ></div>
-        <div
-          className={styles.videoItem}
-          id="ThirdEpisode"
-          onClick={(e) => {
-            setDisablePopupStatus(true);
-            sendKey(e);
-          }}
-        ></div>
+        <AllMovies />
       </div>
     </div>
   );
 });
-
-const Video = hoc(VideoPage);
-
-export default connect(mapStateToProps)(Video);
+export { VideoPage };

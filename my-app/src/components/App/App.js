@@ -17,7 +17,7 @@ const DialogsContainer = React.lazy(() =>
   import("../Dialogs/DialogsContainer")
 );
 const Video = React.lazy(() =>
-  import("../Video/Video")
+  import("../Video/VideoContainer")
 );
 const CardProfile = React.lazy(() =>
   import("../Music/Music")

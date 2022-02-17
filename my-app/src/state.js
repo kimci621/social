@@ -8,6 +8,7 @@ import paginationReducer from "../src/reducers/pagination";
 import isFetchingReducer from "../src/reducers/isFetching";
 import profileUpdateReducer from "../src/reducers/updateProfile";
 import usersReducer from "../src/reducers/users";
+import videoReducer from "../src/reducers/video"
 
 let allReducers = combineReducers({
   profileUpdateReducer: profileUpdateReducer,
@@ -17,6 +18,7 @@ let allReducers = combineReducers({
   paginationReducer: paginationReducer,
   isFetchingReducer: isFetchingReducer,
   usersReducer: usersReducer,
+  videoReducer: videoReducer
 });
 
 let store = createStore(allReducers, compose(applyMiddleware(thunk)));
